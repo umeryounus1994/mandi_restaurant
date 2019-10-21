@@ -1,0 +1,221 @@
+{
+  "FORM": {
+    "COMPANY": {
+      "email": "Email",
+      "password": "Password",
+      "location": "Select location",
+      "firm": "Firm",
+      "gender": {
+        "title": "Gender",
+        "male": "Mr",
+        "female": "Mrs"
+      },
+      "firstName": "First name",
+      "lastName": "Last name",
+      "street": "Street",
+      "houseNumber": "Housenumber",
+      "zipCode": "ZIP Code",
+      "city": "City"
+    },
+    "LOCATION": {
+      "name": "Location name",
+      "address": "Address",
+      "phoneNumber": "Phone number",
+      "tableAmount": "Amount of tables",
+      "wifiName": "Wifi name",
+      "wifiPassword": "Wifi password",
+      "OH": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+      },
+      "profileImage": "Upload or update a profile image",
+      "galleryImages": "Store or search images here."
+    }
+  },
+  "ERROR": {
+    "noLocations": "Sorry, you haven't added a bar yet.",
+    "noNewOrders": "No new orders",
+    "noOpenOrders": "No open orders"
+  },
+  "SUBMIT": {
+    "add": "Add",
+    "create": "Create",
+    "update": "Update",
+    "edit": "Edit",
+    "delete": "Delete",
+    "order": "Order now",
+    "pay": "Pay",
+    "complete": "Complete",
+    "deactivate": "Deactivate",
+    "activate": "Activate",
+    "cancel": "Cancel"
+  },
+  "LOGIN": {
+    "title": "Welcome back!",
+    "subtitle": "Login to continue with House of Mandi.",
+    "passwordReset": "Forgot your password?",
+    "login": "Login now",
+    "register": "No account yet? Register now!",
+    "loading": "You are now logged in!"
+  },
+  "PASSWORDRESET": {
+    "title": "Reset password",
+    "subtitle": "Enter your mail to reset the password.",
+    "passwordReset": "Reset now"
+  },
+  "REGISTER": {
+    "title": "Register now",
+    "subtitle": "In the next step you will have the possibility to choose your package.",
+    "register": "Register now",
+    "login": "Already registered? Log in now!",
+    "loading": "Welcome to House of Mandi. You will now be registered!"
+  },
+  "COMPANY": {
+    "NAVIGATION": {
+      "locations": "Locations",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "OVERVIEW": {
+      "title": "Welcome back,",
+      "greeting": "{{name}}",
+      "addLocation": "Add new location",
+      "loading": "Welcome!"
+    },
+    "ADDLOCATION": {
+      "title": "Add new location",
+      "titleLocationDetails": "Locationdetails",
+      "titleOpeningHours": "Opening hours",
+      "loading": "Your location will be added."
+    },
+    "SETTINGS": {
+      "title": "Settings",
+      "titleEmployeeAccounts": "Employee accounts",
+      "loading": "Your account details will be loaded!"
+    },
+    "EMPLOYEEACCOUNT": {
+      "EDIT": {
+        "title": "Edit employee account",
+        "loading": "Employee account will be loaded!"
+      },
+      "ADD": {
+        "title": "Add employee account",
+        "loading": "Employee account will be added!"
+      }
+    }
+  },
+  "LOCATION": {
+    "NAVIGATION": {
+      "orders": "Orders",
+      "cards": "Menucards",
+      "statistics": "Statistics",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "ORDERS": {
+      "title": "Orders",
+      "receipts": "Receipts",
+      "addOrder": "Create new Order",
+      "selectTable": "Select a table",
+      "table": "Table",
+      "all": "All tables",
+      "titleNewOrders": "New Orders",
+      "titleOpenOrders": "Open Orders",
+      "loading": "Data will be loaded!",
+      "ADD": {
+        "title": "Create a new Order",
+        "cart": "Cart"
+      },
+      "CART": {
+        "title": "Cart"
+      },
+      "ORDER": {
+        "title": "Order",
+        "complete": "Order ready",
+        "pay": "Order paid"
+      },
+      "DOWNLOADS": {
+        "title": "Receipts",
+        "subtitle": "Please note that your monthly receipts will be automatically deleted from our system one week after the end of the month."
+      }
+    },
+    "CARDS": {
+      "title": "Menucard",
+      "shisha": "Shisha",
+      "drinks": "Drinks",
+      "snacks": "Snacks",
+      "select": "Select a card",
+      "CARD": {
+        "shisha": "Shishacard",
+        "drinks": "Drinkscard",
+        "snacks": "Snackscard",
+        "loading": "Card will be loaded!"
+      },
+      "CATEGORY": {
+        "new": "Create new Category",
+        "edit": "Change category",
+        "select": "Select a category",
+        "CREATE": {
+          "title": "Create Category",
+          "loading": "Category will be created!"
+        },
+        "EDIT": {
+          "title": "Edit Category",
+          "loading": "Category will be edited!"
+        },
+        "FORM": {
+          "name": "Categoryname",
+          "price": "Price"
+        }
+      },
+      "MENUITEM": {
+        "title": "Menuitems",
+        "CREATE": {
+          "title": "Create Menuitems",
+          "loading": "Menuitems will be created!"
+        },
+        "EDIT": {
+          "title": "Edit Menuitems",
+          "loading": "Menuitems will be edited!"
+        },
+        "FORM": {
+          "category": "Select a category",
+          "name": "Name",
+          "price": "Price",
+          "amount": "Amount"
+        }
+      }
+      
+    },
+    "SETTINGS": {
+      "title": "Locationdetails",
+      "tables": "Tables",
+      "services": "Services",
+      "titleOpeningHours": "Opening Hours",
+      "titleProfileImage": "Profile Image",
+      "titleGalleryImages": "Gallery Images",
+      "loading": "Locationdetails will be loaded!",
+      "TABLES": {
+        "title": "Rename tables",
+        "table": "Table",
+        "loading": "Tables will be loaded!"
+      },
+      "SERVICES": {
+        "title": "Additional free services",
+        "createNewService": "Create new Service",
+        "loading": "Services will be loaded!",
+        "CREATE": {
+          "title": "Create new Service",
+          "select": "Select a service",
+          "name": "Servicename",
+          "loading": "Service will be created!"
+        }
+      }
+    }
+  }
+}

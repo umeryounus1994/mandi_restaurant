@@ -1,0 +1,221 @@
+{
+  "FORM": {
+    "COMPANY": {
+      "email": "Email",
+      "password": "Passwort",
+      "location": "Standortauswahl",
+      "firm": "Firma",
+      "gender": {
+        "title": "Anrede",
+        "male": "Herr",
+        "female": "Frau"
+      },
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "street": "Straße",
+      "houseNumber": "Hausnummer",
+      "zipCode": "Postleitzahl",
+      "city": "Stadt"
+    },
+    "LOCATION": {
+      "name": "Standortname",
+      "address": "Adresse",
+      "phoneNumber": "Telefonnummer",
+      "tableAmount": "Anzahl der Tische",
+      "wifiName": "WLAN-Netzwerkname",
+      "wifiPassword": "WLAN-Passwort",
+      "OH": {
+        "monday": "Montag",
+        "tuesday": "Dienstag",
+        "wednesday": "Mittwoch",
+        "thursday": "Donnerstag",
+        "friday": "Freitag",
+        "saturday": "Samstag",
+        "sunday": "Sonntag"
+      },
+      "profileImage": "Lade ein Titelbild hoch",
+      "galleryImages": "Bilder hier ablegen oder suchen."
+    }
+  },
+  "ERROR": {
+    "noLocations": "Du hast leider noch keine Bar hinzugefügt.",
+    "noNewOrders": "Keine neuen Bestellungen",
+    "noOpenOrders": "Keine offene Bestellungen"
+  },
+  "SUBMIT": {
+    "add": "Hinzufügen",
+    "create": "Jetzt erstellen",
+    "update": "Aktualisieren",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "order": "Jetzt Bestellung aufgeben",
+    "pay": "Bezahlen",
+    "complete": "Fertig",
+    "deactivate": "Deaktivieren",
+    "activate": "Aktivieren",
+    "cancel": "Stornieren"
+  },
+  "LOGIN": {
+    "title": "Willkommen zurück!",
+    "subtitle": "Um fortzufahren, logge dich bitte ein.",
+    "passwordReset": "Passwort vergessen?",
+    "login": "Jetzt einloggen",
+    "register": "Noch keinen Account? Jetzt registrieren!",
+    "loading": "Du wirst nun eingeloggt!"
+  },
+  "PASSWORDRESET": {
+    "title": "Passwort zurücksetzen",
+    "subtitle": "Trage deine Mail ein, um das Passwort zurückzusetzen.",
+    "passwordReset": "Jetzt zurücksetzen"
+  },
+  "REGISTER": {
+    "title": "Jetzt registrieren",
+    "subtitle": "Im nächsten Schritt wirst du die Möglichkeit haben dein Paket auszuwählen.",
+    "register": "Jetzt registrieren",
+    "login": "Bereits registriert? Jetzt einloggen!",
+    "loading": "Herzlich Willkommen bei House of Mandi. Du wirst nun registriert!"
+  },
+  "COMPANY": {
+    "NAVIGATION": {
+      "locations": "Standorte",
+      "settings": "Einstellungen",
+      "logout": "Logout"
+    },
+    "OVERVIEW": {
+      "title": "Willkommen zurück,",
+      "greeting": "{{name}}",
+      "addLocation": "Neue Bar erstellen",
+      "loading": "Herzlich Willkommen"
+    },
+    "ADDLOCATION": {
+      "title": "Neuen Standort erstellen",
+      "titleLocationDetails": "Standortdetails",
+      "titleOpeningHours": "Öffnungszeiten",
+      "loading": "Dein Standort wird erstellt!"
+    },
+    "SETTINGS": {
+      "title": "Einstellungen",
+      "titleEmployeeAccounts": "Mitarbeiteraccounts",
+      "loading": "Deine Accountdetails werden geladen!"
+    },
+    "EMPLOYEEACCOUNT": {
+      "EDIT": {
+        "title": "Mitarbeiteraccount anpassen",
+        "loading": "Mitarbeiteraccount wird aktualisiert!"
+      },
+      "ADD": {
+        "title": "Mitarbeiteraccount erstellen",
+        "loading": "Mitarbeiteraccount wird erstellt!"
+      }
+    }
+  },
+  "LOCATION": {
+    "NAVIGATION": {
+      "orders": "Bestellungen",
+      "cards": "Menükarten",
+      "statistics": "Statistiken",
+      "settings": "Einstellungen",
+      "logout": "Logout"
+    },
+    "ORDERS": {
+      "title": "Bestellungen",
+      "receipts": "Quittungen",
+      "addOrder": "Neue Bestellung",
+      "selectTable": "Wähle einen Tisch aus",
+      "table": "Tisch",
+      "all": "Alle Tische",
+      "titleNewOrders": "Neue Bestellungen",
+      "titleOpenOrders": "Offene Bestellungen",
+      "loading": "Daten werden geladen!",
+      "ADD": {
+        "title": "Neue Bestellung hinzufügen",
+        "cart": "Warenkorb"
+      },
+      "CART": {
+        "title": "Warenkorb"
+      },
+      "ORDER": {
+        "title": "Bestellung",
+        "complete": "Bestellung fertig",
+        "pay": "Bestellung bezahlt"
+      },
+      "DOWNLOADS": {
+        "title": "Quittungen",
+        "subtitle": "Bitte beachte, dass deine monatlichen Quittungen, eine Woche nach Monatsende, automatisch aus unserem System gelöscht werden."
+      }
+    },
+    "CARDS": {
+      "title": "Menükarte",
+      "shisha": "Shisha",
+      "drinks": "Getränke",
+      "snacks": "Snacks",
+      "select": "Wähle eine Karte aus",
+      "CARD": {
+        "shisha": "Shishakarte",
+        "drinks": "Getränkekarte",
+        "snacks": "Snackskarte",
+        "loading": "Karte wird geladen!"
+      },
+      "CATEGORY": {
+        "new": "Neue Kategorie",
+        "edit": "Kategorie ändern",
+        "select": "Wähle eine Kategorie aus",
+        "CREATE": {
+          "title": "Kategorie erstellen",
+          "loading": "Kategorie wird erstellt!"
+        },
+        "EDIT": {
+          "title": "Kategorie anpassen",
+          "loading": "Kategorie wird angepasst!"
+        },
+        "FORM": {
+          "name": "Kategoriename",
+          "price": "Preis"
+        }
+      },
+      "MENUITEM": {
+        "title": "Menüeinträge",
+        "CREATE": {
+          "title": "Menüeintrag erstellen",
+          "loading": "Menüeintrag wird erstellt!"
+        },
+        "EDIT": {
+          "title": "Menüeintrag anpassen",
+          "loading": "Menüeintrag wird angepasst!"
+        },
+        "FORM": {
+          "category": "Kategorieauswahl",
+          "name": "Name",
+          "price": "Preis",
+          "amount": "Anzahl"
+        }
+      }
+      
+    },
+    "SETTINGS": {
+      "title": "Standortdetails",
+      "tables": "Tische",
+      "services": "Services",
+      "titleOpeningHours": "Öffnungszeiten",
+      "titleProfileImage": "Titelbild",
+      "titleGalleryImages": "Galeriebilder",
+      "loading": "Standortdetals werden geladen!",
+      "TABLES": {
+        "title": "Tische umbennen",
+        "table": "Tisch",
+        "loading": "Tische werden geladen!"
+      },
+      "SERVICES": {
+        "title": "Zusätzliche kostenlose Services",
+        "createNewService": "Neuen Service erstellen",
+        "loading": "Services werden geladen!",
+        "CREATE": {
+          "title": "Neuen Service erstellen",
+          "select": "Wähle einen Service aus",
+          "name": "Servicename",
+          "loading": "Service wird erstellt!"
+        }
+      }
+    }
+  }
+}

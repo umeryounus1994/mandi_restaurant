@@ -1,0 +1,93 @@
+<header-admin></header-admin>
+
+<div class="main container">
+  <div class="header">
+    <div class="grid-2">
+      <div class="title">
+        <p class="subtitle">Bar</p>
+        <h1>{{bar_data.barName}}</h1>
+        <p>{{barId}}</p>
+        <p class="success">{{loadingText}}</p>
+      </div>
+      <div class="buttons">
+        <button class="button button-progress" (click)="blockBar('block')" *ngIf="barStatus == 'active'">Blockieren</button>
+        <button class="button button-success" (click)="blockBar('unblock')" *ngIf="barStatus == 'disable'">UnBlock</button>
+        <button class="button button-danger" (click)="deleteBar()">Löschen</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="bart-details">
+      <div class="title">
+        <h2>Bardetails</h2>
+      </div>
+
+      <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+        <div class="grid-2">
+          <label for="barName">
+            <span class="input-label">Barname</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="bar_data.barName" name="barName" id="barName" id="barName" required>
+            </div>
+          </label>
+          <label for="streethouse">
+            <span class="input-label">Adresse</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" ngx-google-places-autocomplete [(ngModel)]="bar_data.streethouse" name="streethouse" #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" id="address" placeholder="Adresse" required>
+            </div>
+          </label>
+          <label for="phone">
+            <span class="input-label">Telefonnummer</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="bar_data.phone" name="phone" id="phone-number" required>
+            </div>
+          </label>
+          <label for="tables">
+            <span class="input-label">Tischanzahl</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" name="tables" id="tables">
+            </div>
+          </label>
+        </div>
+
+        <button type="submit" class="button button-primary">Aktualisieren</button>
+      </form>
+
+    </div>
+    
+    <div class="divider"></div>
+
+    <div class="profile-image">
+      <div class="title">
+        <h2>Titelbild</h2>
+      </div>
+
+      <input type="file" (change)="uploadSingle($event)" accept=".png,.jpg,.gif" class="form-control">
+      <img *ngIf="bar_data.barImage != ''" [src]="bar_data.barImage" style="height:100px; width:100px" />
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="gallery-images">
+      <div class="title">
+        <h2>Galeriebilder</h2>
+      </div>
+
+      <input type="file" (change)="uploadMultiple($event)" accept=".png,.jpg,.gif" class="form-control">
+
+      <p *ngIf = "bImages.length < 0"></p>
+      <div *ngIf="bImages.length > 0">
+        <div *ngFor = "let i of bImages">
+          <img  [src]="i.imagePath" style="height:100px; width:100px" /><br>
+          <a (click)="deleteImage(i.imageId)" class="danger">Löschen</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
+  <p style="font-size: 20px; color: white">Accountdetails anpassen...</p>
+</ngx-spinner>
+<router-outlet></router-outlet>

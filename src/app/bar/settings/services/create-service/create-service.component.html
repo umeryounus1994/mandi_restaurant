@@ -1,0 +1,46 @@
+<header-bar></header-bar>
+
+<div class="main container">
+  <div class="header">
+    <div class="grid-2">
+      <div class="title">
+        <p class="subtitle">{{ 'LOCATION.SETTINGS.title' | translate }}</p>
+        <h1>{{ 'LOCATION.SETTINGS.SERVICES.CREATE.title' | translate }}</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <form>
+      <div class="services">
+        <div class="grid-2">
+          <label for="service-select">
+            <span class="input-label">{{ 'LOCATION.SETTINGS.SERVICES.CREATE.select' | translate }}</span>
+            <div class="input-wrapper text-wrapper" style="margin-top: -4px; height: 18px;">
+              <select name="service-select" (change)="saveService($event.target.value)">
+                <!-- First three are predefined and can be simply selected to create the service, last one selected will show a text field where they can add custom service -->
+                <option value="Kellner rufen">Kellner rufen</option>
+                <option value="Kohle bestellen">Kohle bestellen</option>
+                <option value="Sonstiges">Sonstiges</option>
+              </select>
+            </div>
+          </label>
+          <!-- Show only if "Sonstiges" is selected -->
+          <label for="service-custom" *ngIf="showInput">
+            <span class="input-label">{{ 'LOCATION.SETTINGS.SERVICES.CREATE.name' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="serviceName" name="service-custom" id="service-custom">
+            </div>
+          </label>
+        </div>
+        
+        <button type="submit" class="button button-primary" (click)="add()">{{ 'SUBMIT.create' | translate }}</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
+  <p style="font-size: 20px; color: white">{{ 'LOCATION.SETTINGS.SERVICES.CREATE.loading' | translate }}</p>
+</ngx-spinner>
+<router-outlet></router-outlet>

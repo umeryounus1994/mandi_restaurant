@@ -1,0 +1,46 @@
+<header-bar></header-bar>
+
+<div class="main container">
+  <div class="header">
+    <div class="title">
+      <p class="subtitle">Breakfast</p>
+      <h1>{{ 'LOCATION.CARDS.MENUITEM.CREATE.title' | translate }}</h1>
+      <p class="success">{{ loadingText }}</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+      <div class="grid-2">
+        <label for="categories">
+          <span class="input-label">{{ 'LOCATION.CARDS.MENUITEM.FORM.category' | translate }}</span>
+          <div class="input-wrapper text-wrapper" style="margin-top: -4px; height: 18px;">
+            <select (change)="saveCategory($event.target.value)" name="categories">
+              <option *ngFor ="let c of categories" value="{{c.categoryId}}">{{c.categoryName}}: 
+                  <span class="sPrice">{{c.price}}</span>€</option>
+            </select>
+          </div>
+        </label>
+        <label for="itemName">
+          <span class="input-label">{{ 'LOCATION.CARDS.MENUITEM.FORM.name' | translate }}</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="text" [(ngModel)]="menu_item.itemName" name="itemName" id="menuitemname" required>
+          </div>
+        </label>
+        <label for="itemAmount">
+          <span class="input-label">{{ 'LOCATION.CARDS.MENUITEM.FORM.amount' | translate }}</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="number" [(ngModel)]="menu_item.itemAmount" name="itemAmount" id="itemAmount" required>
+          </div>
+        </label>
+      </div>
+      
+      <button type="submit" class="button button-primary">{{ 'SUBMIT.create' | translate }}</button>
+    </form>
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
+  <p style="font-size: 20px; color: white">{{ 'LOCATION.CARDS.MENUITEM.CREATE.loading' | translate }}</p>
+</ngx-spinner>
+<router-outlet></router-outlet>

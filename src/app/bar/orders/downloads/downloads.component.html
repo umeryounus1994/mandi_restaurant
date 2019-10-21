@@ -1,0 +1,29 @@
+<header-bar></header-bar>
+
+<div class="main container">
+  <div class="header">
+    <div class="title">
+      <p class="subtitle">{{barName}}</p>
+      <h1>{{ 'LOCATION.ORDERS.DOWNLOADS.title' | translate }}</h1>
+      <p>{{ 'LOCATION.ORDERS.DOWNLOADS.subtitle' | translate }}</p>
+      <p>{{errorText}}</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="grid-3">
+      <div class="downloads">
+        <div class="small-card" (click)="exportCurrent()">
+          <p>{{todayDate}}</p>
+        </div>
+      </div>
+      <div class="downloads">
+        <div class="small-card" *ngIf="lastMonthData.length > 0">
+          <p>{{lastMonthDate}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

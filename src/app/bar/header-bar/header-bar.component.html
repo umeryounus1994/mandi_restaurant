@@ -1,0 +1,46 @@
+<div class="nav-bar">
+  <nav class="bar">
+    <div class="item" *ngIf="userType == 'barowner'">
+      <img (click)="navigateHomeOwner()" class="logo" src="../../assets/app_icon.png" alt="House of Mandi">
+    </div>
+    <div class="item">
+      <img class="logo" src="../../assets/app_icon.png" alt="House of Mandi">
+    </div>
+    <div class="item">
+      <ul>
+        <li><a (click)="navigateOrders()">{{ 'LOCATION.NAVIGATION.orders' | translate }}</a></li>
+        <li><a (click)="navigateCards()">{{ 'LOCATION.NAVIGATION.cards' | translate }}</a></li>
+        <!--<li *ngIf="userType == 'barowner'"><a [class.active]="currentUrl == '/bar/statistiken'" (click)="navigateStatistics()">{{ 'LOCATION.NAVIGATION.statistics' | translate }}</a></li>-->
+      </ul>
+    </div>
+    <div class="item">
+      <ul>
+        <!-- <li><i (click)="navigateBarSettings()" class="icon ion-ios-cog"></i></li> -->
+        <li (click)="logout()"><i class="icon ion-ios-log-out"></i></li>
+      </ul>
+    </div>
+  </nav>
+  
+  <nav class="bar-mobile">
+    <div id="menuToggle">
+
+      <input type="checkbox" />
+
+      <span></span>
+      <span></span>
+      <span></span>
+      <ul id="menu">
+        <li><a (click)="navigateOrders()">{{ 'LOCATION.NAVIGATION.orders' | translate }}</a></li>
+        <li><a (click)="navigateCards()">{{ 'LOCATION.NAVIGATION.cards' | translate }}</a></li>
+        <!--<li *ngIf="userType == 'barowner'"><a [class.active]="currentUrl == '/bar/statistiken'" (click)="navigateStatistics()">{{ 'LOCATION.NAVIGATION.statistics' | translate }}</a></li>-->
+        <li><a (click)="logout()">{{ 'LOCATION.NAVIGATION.logout' | translate }}</a></li>
+      </ul>
+    </div>
+    <div class="item" *ngIf="userType == 'barowner'">
+      <img (click)="navigateHomeOwner()" class="logo" src="../../assets/app_icon.png" alt="House of Mandi">
+    </div>
+    <div class="item" *ngIf="userType == 'barmember'">
+      <img class="logo" src="../../assets/app_icon.png" alt="House of Mandi">
+    </div>
+  </nav>
+</div>

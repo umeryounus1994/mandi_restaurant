@@ -1,0 +1,70 @@
+<header-bar></header-bar>
+
+<div class="main container">
+  <div class="header">
+    <div class="grid-2">
+      <div class="title">
+        <p class="subtitle">{{barName}}</p>
+        <h1>{{ 'LOCATION.ORDERS.title' | translate }}</h1>
+      </div>
+      <div class="buttons">
+        <button (click)="navigateDownloads()" class="button button-primary-tint">{{ 'LOCATION.ORDERS.receipts' | translate }}</button>
+        <button (click)="navigateNewOrder()" class="button button-primary">{{ 'LOCATION.ORDERS.addOrder' | translate }}</button>
+      </div>
+    </div>
+    <div class="grid-3">
+      <!-- Filter possibility between tables -->
+      <label for="tables">
+        <span class="input-label">{{ 'LOCATION.ORDERS.selectTable' | translate }}</span>
+        <div class="input-wrapper text-wrapper" style="margin-top: -4px; height: 18px;">
+            <select (change)="SearchTableWise($event.target.value)" name="tables">
+              <!-- Shows all orders -->
+              <option value="all" selected>{{ 'LOCATION.ORDERS.all' | translate }}</option>
+              <!-- Each table number should be shown in a seperate option -->
+              <option value="{{t.tableNo}}" *ngFor="let t of tables">{{ 'LOCATION.ORDERS.table' | translate }} {{t.tableNo}}: {{t.tableName}}</option>
+            </select>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="content">
+    <div class="grid-2">
+      <div class="new-orders">
+        <div class="title">
+          <h3>{{ 'LOCATION.ORDERS.titleNewOrders' | translate }}</h3>
+          <p *ngIf="pending.length < 1">{{ 'ERROR.noNewOrders' | translate }}</p>
+        </div>
+        
+        <div class="orders">
+          <div class="grid-1">
+            <div class="small-card danger-bg" *ngFor="let p of pending" (click)="orderDetail(p.userOrderId,p.userName)">
+              <p>{{ 'LOCATION.ORDERS.table' | translate }} {{p.tableNo}} ({{p.tableName}}): {{p.userName}} - {{p.orderTime}}Uhr</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-orders">
+        <div class="title">
+          <h3>{{ 'LOCATION.ORDERS.titleOpenOrders' | translate }}</h3>
+          <p *ngIf="completed.length < 1">{{ 'ERROR.noOpenOrders' | translate }}</p>
+        </div>
+        <div class="orders">
+          <div class="grid-1">
+            <div class="small-card" *ngFor="let c of completed" (click)="orderDetail(c.userOrderId,c.userName)">
+              <p>{{ 'LOCATION.ORDERS.table' | translate }} {{c.tableName}}: {{c.userName}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
+  <p style="font-size: 20px; color: white">{{ 'LOCATION.ORDERS.loading' | translate }}</p>
+</ngx-spinner>
+<router-outlet></router-outlet>

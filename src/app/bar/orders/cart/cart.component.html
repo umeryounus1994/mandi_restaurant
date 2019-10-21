@@ -1,0 +1,85 @@
+<header-bar></header-bar>
+
+<div class="main container">
+  <div class="header">
+    <div class="grid-2">
+      <div class="title">
+        <p class="subtitle">{{ 'LOCATION.ORDERS.title' | translate }}</p>
+        <h1>{{ 'LOCATION.ORDERS.CART.title' | translate }}</h1>
+        <p class="danger" *ngIf="errorMessage != ''">{{ errorMessage }}</p>
+      </div>
+    </div>
+    <div class="grid-3">
+      <!-- Filter possibility between tables -->
+      <label for="tables">
+        <span class="input-label">{{ 'LOCATION.ORDERS.table' | translate }}</span>
+        <div class="input-wrapper text-wrapper" style="margin-top: -4px; height: 18px;">
+            <select (change)="SearchTableWise($event.target.value)" name="tables">
+              <!-- Shows all possible table numbers -->
+              <option value="" selected disabled>{{ 'LOCATION.ORDERS.selectTable' | translate }}</option>
+              <!-- Table numbers -->
+              <option value="{{t.tableNo}}" *ngFor="let t of tables">{{ 'LOCATION.ORDERS.table' | translate }} {{t.tableNo}}: {{t.tableName}}</option>
+            </select>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="content">
+    <div class="order">
+      <div class="grid-2">
+        <!-- If there a menu items from shishaCard, show the following -->
+        <div class="shisha" *ngIf="shishaItem.length > 0">
+          <div class="title">
+            <h3>{{ 'LOCATION.CARDS.shisha' | translate }}</h3>
+          </div>
+          <div class="grid-1">
+            <div class="small-card" *ngFor="let c of shishaItem;let i=index">
+              <div class="subtitles">
+                <p class="danger" (click)="remove(c,i)">{{ 'SUBMIT.delete' | translate }}</p>
+              </div>
+              <p>{{c.name}}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- If there a menu items from drinksCard, show the following -->
+        <div class="drinks" *ngIf="drinksItem.length > 0">
+          <div class="title">
+            <h3>{{ 'LOCATION.CARDS.drinks' | translate }}</h3>
+          </div>
+          <div class="grid-1">
+            <div class="small-card" *ngFor="let c of drinksItem;let i=index">
+              <div class="subtitles">
+                <p class="danger" (click)="remove(c,i)">{{ 'SUBMIT.delete' | translate }}</p>
+              </div>
+              <p>{{c.name}}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- If there a menu items from foodsCard, show the following -->
+        <div class="foods" *ngIf="foodsItem.length > 0">
+          <div class="title">
+            <h3>{{ 'LOCATION.CARDS.snacks' | translate }}</h3>
+          </div>
+          <div class="grid-1">
+            <div class="small-card" *ngFor="let c of foodsItem;let i=index">
+              <div class="subtitles">
+                <p class="danger" (click)="remove(c,i)">{{ 'SUBMIT.delete' | translate }}</p>
+              </div>
+              <p>{{c.name}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button (click)="processOrder()" class="button button-primary">{{ 'SUBMIT.order' | translate }}</button>
+      
+  </div>
+</div>
+
+<router-outlet></router-outlet>

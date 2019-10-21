@@ -1,0 +1,53 @@
+<header-bar></header-bar>
+
+<div class="main container">
+  <div class="header">
+    <div class="grid-2">
+      <div class="title">
+        <p class="subtitle">{{ 'LOCATION.CARDS.title' | translate }}</p>
+        <h1>{{ 'LOCATION.CARDS.CARD.snacks' | translate }}</h1>
+      </div>
+      <div class="buttons">
+        <button (click)="navigateNewCategory()" class="button button-primary">{{ 'LOCATION.CARDS.CATEGORY.new' | translate }}</button>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <label for="categories">
+        <span class="input-label">{{ 'LOCATION.CARDS.CATEGORY.select' | translate }}</span>
+        <div class="input-wrapper text-wrapper" style="margin-top: -4px; height: 18px;">
+          <select (change)="saveCategory($event.target.value)" name="categories">
+            <option *ngFor ="let c of categories" value="{{c.categoryId}}">{{c.categoryName}}</option>
+          </select>
+        </div>
+      </label>
+      <p (click)="editCategory()">{{ 'LOCATION.CARDS.CATEGORY.edit' | translate }}</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="content">
+    <div class="title">
+      <h2>{{ 'LOCATION.CARDS.MENUITEM.title' | translate }} <i (click)="navigateNewMenuItem()" class="icon ion-ios-add"></i></h2>
+    </div>
+    <div class="menu-items">
+      <div class="grid-2">
+        <div class="small-card" *ngFor ="let m of menuItems">
+          <div class="subtitles">
+            <p (click)="editMenu(m.itemId)">{{ 'SUBMIT.edit' | translate }}</p>
+            <p class="progress" *ngIf="m.status == 'active'" (click)="changeStatus(m.itemId,'disable')">{{ 'SUBMIT.deactivate' | translate }}</p>
+            <p class="success" *ngIf="m.status == 'disable'" (click)="changeStatus(m.itemId,'active')">{{ 'SUBMIT.activate' | translate }}</p>
+          </div>
+          <p *ngIf="m.status == 'active'">{{m.itemName}}</p>
+          <p *ngIf="m.status == 'disable'" class="progress">{{m.itemName}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
+  <p style="font-size: 20px; color: white">{{ 'LOCATION.CARDS.loading' | translate }}</p>
+</ngx-spinner>
+<router-outlet></router-outlet>

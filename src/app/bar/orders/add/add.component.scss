@@ -1,0 +1,38 @@
+.menu-items {
+  margin-top: 16px; 
+  
+  .item {
+    display: grid;
+    grid-template-columns: auto 60px;
+    grid-column-gap: 8px;
+    padding: unset;
+    background: unset;
+    border: unset;
+    border-radius: unset;
+    color: unset;
+  
+    p {
+      padding: 16px 20px;
+      background: white;
+      border: 1px solid #E3E3E7;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .cart-icon {
+      background: #1DFCB7;
+      border: 1px solid #1DFCB7;
+    }
+  
+    .icon {
+      padding: 16px 0 16px;
+      border-radius: 5px;
+      text-align: center;
+  
+      i {
+        color: white;
+        font-size: 24px;
+      }
+    }
+  }
+}

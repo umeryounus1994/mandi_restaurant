@@ -1,0 +1,8 @@
+.timeframe {
+  p {
+    display: inline-block;
+    margin-right: 16px;
+
+    &:last-child { margin: 0;}
+  }
+}

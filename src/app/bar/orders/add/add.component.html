@@ -1,0 +1,55 @@
+<header-bar></header-bar>
+
+<div class="main container">
+  <div class="header">
+    <div class="grid-2">
+      <div class="title">
+        <p class="subtitle">{{ 'LOCATION.ORDERS.title' | translate }}</p>
+        <h1>{{ 'LOCATION.ORDERS.ADD.title' | translate }}</h1>
+        <p class="danger">{{errorText}}</p>
+      </div>
+      <div class="buttons">
+        <button class="button button-primary" (click)="navigateCart()">{{ 'LOCATION.ORDERS.ADD.cart' | translate }} ({{itemsNo}})</button>
+      </div>
+    </div>
+    <div class="grid-3">
+      <!-- Filter possibility between menu cards -->
+      <label for="cards">
+        <span class="input-label">{{ 'LOCATION.CARDS.select' | translate }}</span>
+        <div class="input-wrapper text-wrapper" style="margin-top: -4px; height: 18px;">
+          <select (change)="onChangePage($event.target.value)" name="cards">
+            <!-- Show the menu cards (only those, where menu items are also there) -->
+            <option *ngIf="shishaCard" value="Shishakarte">{{ 'LOCATION.CARDS.CARD.shisha' | translate }}</option>
+            <option *ngIf="drinksCard" value="Getrankekarte">{{ 'LOCATION.CARDS.CARD.drinks' | translate }}</option>
+            <option *ngIf="foodCard" value="Speisekarte">{{ 'LOCATION.CARDS.CARD.snacks' | translate }}</option>
+          </select>
+        </div>
+      </label>
+      <label for="category" *ngIf="showCategory">
+        <span class="input-label">{{ 'LOCATION.CARDS.CATEGORY.select' | translate }}</span>
+        <div class="input-wrapper text-wrapper" style="margin-top: -4px; height: 18px;">
+          <!-- Filter possibility between categories, should only be accessible once a specific card is choosen -->
+          <select (change)="onChangeCategory($event.target.value)" name="category" >
+            <!-- Show all menu items from a specifc category -->
+            <option *ngFor="let c of categories" value="{{c.categoryId}}">{{c.categoryName}}</option>
+          </select>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="content">
+    <div class="grid-2">
+      <div class="small-card" *ngFor="let m of menuItems">
+        <div class="subtitles">
+          <p class="success" (click)="addToCart(m)">{{ 'SUBMIT.add' | translate }}</p>
+        </div>
+        <p>{{m.itemName}}<!--: {{m.price}}--></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

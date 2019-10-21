@@ -1,0 +1,31 @@
+<header-bar></header-bar>
+
+<div class="main container">
+  <div class="header">
+    <div class="title">
+      <p class="subtitle">{{ 'LOCATION.CARDS.CARD.snacks' | translate }}</p>
+      <h1>{{ 'LOCATION.CARDS.CATEGORY.CREATE.title' | translate }}</h1>
+      <p class="success">{{ loadingText }}</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+      <div class="grid-2">
+        <label for="categoryName">
+          <span class="input-label">{{ 'LOCATION.CARDS.CATEGORY.FORM.name' | translate }}</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="text" [(ngModel)]="category_data.categoryName" name="categoryName" id="categoryname" required>
+          </div>
+        </label>
+      </div>
+      
+      <button type="submit" class="button button-primary">{{ 'SUBMIT.create' | translate }}</button>
+    </form>
+  </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="large" color="#fff" type="ball-beat">
+  <p style="font-size: 20px; color: white">{{ 'LOCATION.CARDS.CATEGORY.CREATE.loading' | translate }}</p>
+</ngx-spinner>
+<router-outlet></router-outlet>

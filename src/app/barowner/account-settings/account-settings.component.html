@@ -1,0 +1,98 @@
+<header-owner></header-owner>
+
+<div class="main container">
+  <div class="header">
+    <div class="grid-2">
+      <div class="title">
+        <h1>{{ 'COMPANY.SETTINGS.title' | translate }}</h1>
+        <p class="success">{{ loadingText }}</p>
+        <p class="danger">{{errorText}}</p>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="content">
+    <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+      <div class="grid-2">
+        <label for="firm">
+          <span class="input-label">{{ 'FORM.COMPANY.firm' | translate }}</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="text" [(ngModel)]="account_data.firm" name="firm" id="firm">
+          </div>
+        </label>
+        <label for="title">
+          <span class="input-label">{{ 'FORM.COMPANY.gender.title' | translate }}</span>
+          <div class="input-wrapper text-wrapper" style="margin-top: -4px; height: 18px;">
+              <select (change)="getTitle($event.target.value)" name="title" [(ngModel)]="title">
+                <option value="" disabled selected>{{ 'FORM.COMPANY.gender.title' | translate }}</option>
+                <option value="mr">{{ 'FORM.COMPANY.gender.male' | translate }}</option>
+                <option value="mrs">{{ 'FORM.COMPANY.gender.female' | translate }}</option>
+              </select>
+          </div>
+        </label>
+        <label for="firstname">
+          <span class="input-label">{{ 'FORM.COMPANY.firstName' | translate }}</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="text" [(ngModel)]="account_data.firstname" name="firstname" id="first-name" required>
+          </div>
+        </label>
+        <label for="lastname">
+          <span class="input-label">{{ 'FORM.COMPANY.lastName' | translate }}</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="text" [(ngModel)]="account_data.lastname" name="lastname" id="last-name" required>
+          </div>
+        </label>
+        <label for="road">
+          <span class="input-label">{{ 'FORM.COMPANY.street' | translate }}</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="text" id="road" [(ngModel)]="account_data.road" name="road" required>
+          </div>
+        </label>
+        <label for="housenumber">
+          <span class="input-label">{{ 'FORM.COMPANY.houseNumber' | translate }}</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="text" [(ngModel)]="account_data.housenumber" name="housenumber" id="housenumber" required>
+          </div>
+        </label>
+        <label for="zip">
+          <span class="input-label">{{ 'FORM.COMPANY.zip' | translate }}</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="number" [(ngModel)]="account_data.zip" name="zip" id="zip" required>
+          </div>
+        </label>
+        <label for="city">
+          <span class="input-label">{{ 'FORM.COMPANY.city' | translate }}</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="text" [(ngModel)]="account_data.city" name="city" id="city" required>
+          </div>
+        </label>
+      </div>
+        
+      <button type="submit" class="button button-primary">{{ 'SUBMIT.update' | translate }}</button>
+    </form>
+
+    <div class="divider"></div>
+
+    <div class="users">
+      <div class="title">
+        <h2>{{ 'COMPANY.SETTINGS.titleEmployeeAccounts' | translate }} <i (click)="navigateCreateUser()" class="icon ion-ios-add"></i></h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="small-card" *ngFor="let a of assignedBars">
+          <div class="subtitles">
+            <p (click)="navigateEditUser(a)">{{ 'SUBMIT.edit' | translate }}</p>
+          </div>
+          <p>{{a.email}} ({{a.assignedBarName}})</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
+  <p style="font-size: 20px; color: white">{{ 'COMPANY.SETTINGS.loading' | translate }}</p>
+</ngx-spinner>
+<router-outlet></router-outlet>

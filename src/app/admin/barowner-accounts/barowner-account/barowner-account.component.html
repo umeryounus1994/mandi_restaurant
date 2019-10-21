@@ -1,0 +1,150 @@
+<header-admin></header-admin>
+
+<div class="main container">
+  <div class="header">
+    <div class="grid-2">
+      <div class="title">
+        <p class="subtitle">Barbesitzer</p>
+        <h1>{{account_data.email}}</h1>
+        <p class="success">{{loadingText}}</p>
+      </div>
+      <div class="buttons">
+        <button class="button button-progress" (click)="blockBar('block')" *ngIf="barStatus == 'active'">Blockieren</button>
+        <button class="button button-success" (click)="blockBar('unblock')" *ngIf="barStatus == 'disable'">UnBlock</button>
+        <button class="button button-danger" (click)="delete()">Löschen</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="account-details">
+      <div class="title">
+        <h2>Accountdetails</h2>
+      </div>
+
+      <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+        <div class="grid-2">
+          <label for="firm">
+            <span class="input-label">Firma</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="account_data.firm" name="firm" id="firm">
+            </div>
+          </label>
+          <label for="title">
+            <span class="input-label">Anrede</span>
+            <div class="input-wrapper text-wrapper" style="margin-top: -4px; height: 18px;">
+              <select (change)="getTitle($event.target.value)" name="title" [(ngModel)] = "title">
+                <option value="" disabled selected>Anrede</option>
+                <option value="mr">Herr</option>
+                <option value="mrs">Frau</option>
+              </select>
+            </div>
+          </label>
+          <label for="firstname">
+            <span class="input-label">Vorname</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="account_data.firstname" name="firstname" id="first-name" required>
+            </div>
+          </label>
+          <label for="lastname">
+            <span class="input-label">Nachname</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="account_data.lastname" name="lastname" id="last-name" required>
+            </div>
+          </label>
+          <label for="road">
+            <span class="input-label">Straße</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="account_data.road" name="road" id="road" required>
+            </div>
+          </label>
+          <label for="housenumber">
+            <span class="input-label">Hausnummer</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="account_data.housenumber" name="housenumber" id="housenumber" required>
+            </div>
+          </label>
+          <label for="zip">
+            <span class="input-label">Postleitzahl</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="account_data.zip" name="zip" id="zip" required>
+            </div>
+          </label>
+          <label for="city">
+            <span class="input-label">Stadt</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="account_data.city" name="city" id="city" required>
+            </div>
+          </label>
+        </div>
+
+        <button type="submit" class="button button-primary">Aktualisieren</button>
+      </form>
+
+    </div>
+    
+    <div class="divider"></div>
+
+    <div class="package-details">
+      <div class="title">
+        <h2>Abodetails</h2>
+      </div>
+
+      <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+        <div class="grid-2">
+          <label for="packageId">
+            <span class="input-label">Anrede</span>
+            <div class="input-wrapper text-wrapper" style="margin-top: -4px; height: 18px;">
+              <select [(ngModel)]="update_package.packageId" name="packageId">
+                <option value="" disabled selected>Paket auswählen</option>
+                <option value="gm8m">Starter</option>
+                <option value="8n3g">Pro</option>
+              </select>
+            </div>
+          </label>
+          <label for="bars">
+            <span class="input-label">Maximale Baranzahl</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="number" [(ngModel)]="update_package.bars" name="bars" id="bars">
+            </div>
+          </label>
+          <label for="users">
+            <span class="input-label">Maximale Benutzeranzahl</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="update_package.users" name="users" id="users" required>
+            </div>
+          </label>
+          <label for="images">
+            <span class="input-label">Maximale Bilderanzahl</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="update_package.images" name="images" id="images" required>
+            </div>
+          </label>
+        </div>
+
+        <button type="submit" class="button button-primary">Aktualisieren</button>
+      </form>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="bars">
+        <div class="title">
+          <h2>Bars</h2>
+        </div>
+  
+        <div class="bars-overview">
+          <div class="grid-2">
+            <div class="card" *ngFor="let b of userBars" (click)="BarProfile(b.barId,b.userId)">
+              <h3>{{ b.barName }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
+  <p style="font-size: 20px; color: white">Accountdetails anpassen...</p>
+</ngx-spinner>
+<router-outlet></router-outlet>

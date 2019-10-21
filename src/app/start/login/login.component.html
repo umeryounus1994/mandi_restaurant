@@ -1,0 +1,47 @@
+<div class="start">
+  <div class="main container">
+    <div class="header">
+      <img src="assets/app_icon.png" alt="House of Mandi Logo">
+      <h1>{{ 'LOGIN.title' | translate }}<br></h1>
+      <div class="container-small">
+        <p>{{ 'LOGIN.subtitle' | translate }}</p>
+        <p><span class="danger">{{ errorMessage }}</span></p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="container-small">
+        <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+          <div class="grid-1">
+            <label for="email">
+              <span class="input-label">{{ 'FORM.COMPANY.email' | translate }}</span>
+              <div class="input-wrapper text-wrapper">
+                <input type="email" class="form-control" [(ngModel)]="login_data.email" name="email" id="email" required>
+              </div>
+            </label>
+  
+            <label for="password">
+              <span class="input-label">{{ 'FORM.COMPANY.password' | translate }}</span>
+              <div class="input-wrapper text-wrapper">
+                <input type="password" [(ngModel)]="login_data.password" name="password" id="password" required>
+              </div>
+            </label>
+          </div>
+
+          <div class="right">
+            <p><a routerLink="/login/passwort">{{ 'LOGIN.passwordReset' | translate }}</a></p>
+          </div>
+
+          <button type="submit" class="button button-primary">{{ 'LOGIN.login' | translate }}</button>
+          <p><a routerLink="/registrieren">{{ 'LOGIN.register' | translate }}</a></p>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
+  <p style="font-size: 20px; color: white">{{ 'LOGIN.loading' | translate }}</p>
+</ngx-spinner>
+<router-outlet></router-outlet>

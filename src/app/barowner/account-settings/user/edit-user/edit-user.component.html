@@ -1,0 +1,45 @@
+<header-owner></header-owner>
+
+<div class="main container">
+  <div class="header">
+    <div class="title">
+      <p class="subtitle">{{ 'COMPANY.SETTINGS.title' | translate }}</p>
+      <h1>{{ 'COMPANY.EMPLOYEEACCOUNT.EDIT.title' | translate }}</h1>
+    </div>
+  </div>
+
+  <div class="content">
+    <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+      <div class="grid-2">
+        <label for="barNameId">
+          <span class="input-label">{{ 'FORM.COMPANY.location' | translate }}</span>
+          <div class="input-wrapper text-wrapper" style="margin-top: -4px; height: 18px;">
+            <select  name="barNameId" [(ngModel)]="barNameId">
+              <option *ngFor="let b of userBars" value="{{b.barId}},{{b.barName}}">{{b.barName}}</option>
+            </select>
+          </div>
+        </label>
+        <label for="email">
+          <span class="input-label">{{ 'FORM.COMPANY.email' | translate }}</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="email" [(ngModel)]="account_data.email" name="email" id="email" required>
+          </div>
+        </label>
+        <label for="password">
+          <span class="input-label">{{ 'FORM.COMPANY.password' | translate }}</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="password" [(ngModel)]="account_data.password" name="password" id="password" required>
+          </div>
+        </label>
+      </div>
+        
+      <button type="submit" class="button button-primary">{{ 'SUBMIT.update' | translate }}</button>
+    </form>
+
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
+  <p style="font-size: 20px; color: white">{{ 'COMPANY.EMPLOYEEACCOUNT.EDIT.loading' | translate }}</p>
+</ngx-spinner>
+<router-outlet></router-outlet>

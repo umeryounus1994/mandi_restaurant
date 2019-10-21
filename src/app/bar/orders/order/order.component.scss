@@ -1,0 +1,7 @@
+.order {
+  border-top: 2px solid white;
+  padding-top: 36px;
+  margin-bottom: 36px;
+
+  &:first-child { border-top: 0; padding: 0; }
+}

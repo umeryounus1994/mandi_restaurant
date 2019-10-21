@@ -1,0 +1,20 @@
+.gallery-images {
+  .image {
+    img {
+      width: 100%;
+      border-radius: 24px;
+      height: 180px;
+      object-fit: cover;
+    }
+  }
+}
+
+.images {
+  img {
+    margin-top: 20px;
+    width: 100%;
+    border-radius: 24px;
+    height: 180px;
+    object-fit: cover;
+  }
+}

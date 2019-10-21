@@ -1,0 +1,120 @@
+<header-owner></header-owner>
+
+<div class="main container">
+  <div class="header">
+    <div class="title">
+      <h1>{{ 'COMPANY.ADDLOCATION.title' | translate }}</h1>
+      <p class="success">{{ loadingText }}</p>
+      <p class="danger">{{ errorMessage }}</p>
+      <a *ngIf="accounts" style="cursor: pointer;" (click)="account()">Jetzt zu den Accountdetails</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+      <div class="bar-details">
+        <div class="title">
+          <h2>{{ 'COMPANY.ADDLOCATION.titleLocationDetails' | translate }}</h2>
+        </div>
+
+        <div class="grid-2">
+          <label for="locationName">
+            <span class="input-label">{{ 'FORM.LOCATION.name' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="bar_data.barName" name="locationName" id="locationName" required>
+            </div>
+          </label>
+          <label for="streethouse">
+            <span class="input-label">{{ 'FORM.LOCATION.address' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" ngx-google-places-autocomplete [(ngModel)]="bar_data.streethouse" #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" name="streethouse" id="address" placeholder="" required>
+            </div>
+          </label>
+          <label for="phone">
+            <span class="input-label">{{ 'FORM.LOCATION.phoneNumber' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="bar_data.phone" name="phone" id="phone" required>
+            </div>
+          </label>
+          <label for="tables">
+            <span class="input-label">{{ 'FORM.LOCATION.tableAmount' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="bar_data.tables" name="tables" id="tables" required>
+            </div>
+          </label>
+          <label for="wifiName">
+            <span class="input-label">{{ 'FORM.LOCATION.wifiName' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="bar_data.wifiName" name="wifiName" id="wifiName">
+            </div>
+          </label>
+          <label for="wifiPassword">
+            <span class="input-label">{{ 'FORM.LOCATION.wifiPassword' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [(ngModel)]="bar_data.wifiPassword" name="wifiPassword" id="wifiPassword">
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="opening-hours">
+        <div class="title">
+          <h2>{{ 'COMPANY.ADDLOCATION.titleOpeningHours' | translate }}</h2>
+        </div>
+
+        <div class="grid-2">
+          <label for="oh1">
+            <span class="input-label">{{ 'FORM.LOCATION.OH.monday' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [textMask]="{mask: opmask, guide: true}" [(ngModel)]="openingHoursData.oh1" name="oh1" id="montag" placeholder="17.00 - 00.00" required>
+            </div>
+          </label>
+          <label for="oh2">
+            <span class="input-label">{{ 'FORM.LOCATION.OH.tuesday' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [textMask]="{mask: opmask, guide: true}" [(ngModel)]="openingHoursData.oh2"  name="oh2" id="dienstag" placeholder="17.00 - 00.00" required>
+            </div>
+          </label>
+          <label for="oh3">
+            <span class="input-label">{{ 'FORM.LOCATION.OH.wednesday' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [textMask]="{mask: opmask, guide: true}" [(ngModel)]="openingHoursData.oh3" name="oh3" id="mittwoch" placeholder="17.00 - 00.00" required>
+            </div>
+          </label>
+          <label for="oh4">
+            <span class="input-label">{{ 'FORM.LOCATION.OH.thursday' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [textMask]="{mask: opmask, guide: true}"  [(ngModel)]="openingHoursData.oh4" name="oh4" id="donnerstag" placeholder="17.00 - 00.00" required>
+            </div>
+          </label>
+          <label for="oh5">
+            <span class="input-label">{{ 'FORM.LOCATION.OH.friday' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [textMask]="{mask: opmask, guide: true}"  [(ngModel)]="openingHoursData.oh5" name="oh5" id="freitag" placeholder="17.00 - 00.00" required>
+            </div>
+          </label>
+          <label for="oh6">
+            <span class="input-label">{{ 'FORM.LOCATION.OH.saturday' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [textMask]="{mask: opmask, guide: true}" [(ngModel)]="openingHoursData.oh6" name="oh6" id="samstag" placeholder="17.00 - 00.00" required>
+            </div>
+          </label>
+          <label for="oh7">
+            <span class="input-label">{{ 'FORM.LOCATION.OH.sunday' | translate }}</span>
+            <div class="input-wrapper text-wrapper">
+              <input type="text" [textMask]="{mask: opmask, guide: true}" [(ngModel)]="openingHoursData.oh7" name="oh7" id="sonntag" placeholder="17.00 - 00.00" required>
+            </div>
+          </label>
+        </div>
+      </div>
+      
+      <button type="submit" class="button button-primary">{{ 'SUBMIT.add' | translate }}</button>
+    </form>
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
+  <p style="font-size: 20px; color: white">{{ 'COMPANY.ADDLOCATION.loading' | translate }}</p>
+</ngx-spinner>

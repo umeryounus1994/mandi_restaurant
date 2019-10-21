@@ -1,0 +1,44 @@
+<header-admin></header-admin>
+
+<div class="main container">
+  <div class="header">
+    <div class="grid-1">
+      <div class="title">
+        <p class="subtitle">Übersicht</p>
+        <h1>Users (<span>{{userCount}}</span>)</h1>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <label for="search">
+        <span class="input-label">Suche</span>
+        <div class="input-wrapper text-wrapper">
+          <input name="search" (input)="onSearchChange($event.target.value)">
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="content">
+    <div class="title">
+      <h2>Übersicht</h2>
+    </div>
+    <div class="users">
+      <div class="grid-2">
+        <div class="small-card" *ngFor="let u of allUsers">
+          <div class="subtitles">
+            <p (click)="navigateUser(u.userId)">Bearbeiten</p>
+          </div>
+          <p>{{u.email}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
+  <p style="font-size: 20px; color: white">Users laden...</p>
+</ngx-spinner>
+<router-outlet></router-outlet>

@@ -1,0 +1,104 @@
+<header-bar></header-bar>
+
+<div class="main container">
+  <div class="header">
+    <div class="grid-1">
+      <div class="title">
+        <p class="subtitle">{{barName}}</p>
+        <h1>Alle Zahlen im Überblick</h1>
+      </div>
+    </div>
+
+    <div class="timeframe">
+      <p>Heute</p>
+      <p>Woche</p>
+      <p>Monat</p>
+      <p>Jahr</p>
+      <p>Benutzerdefiniert</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="content">
+
+    <div class="grid-2">
+      <div class="card">
+        <p class="subtitle">Bestellungen</p>
+        <h3>150</h3>
+      </div>
+
+      <div class="card">
+        <p class="subtitle">Umsatz</p>
+        <h3>2500,00 €</h3>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- which items are most bough in given timeframe -->
+    <div class="trending-items">
+      <div class="grid-1">
+        <!-- show if shisha entries are there -->
+        <div class="shisha">
+          <div class="title">
+            <h2>Meistverkaufteste Shisha</h2>
+          </div>
+
+          <div class="grid-3">
+            <div class="card">
+              <!-- AMOUNT OF ORDERS Bestellungen
+                  AMOUNT OF REVENUE Umsatz -->
+              <p class="subtitle">40 Bestellungen</p>
+
+              <!-- menu item name -->
+              <h3>Traube-Minz</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- show if drinks entries are there -->
+        <div class="drinks">
+          <div class="title">
+            <h2>Meistverkaufteste Getränke</h2>
+          </div>
+
+          <div class="grid-3">
+            <div class="card">
+              <!-- AMOUNT OF ORDERS Bestellungen
+                  AMOUNT OF REVENUE Umsatz -->
+              <p class="subtitle">40 Bestellungen</p>
+
+              <!-- menu item name -->
+              <h3>Wasser</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- show if snacks entries are there -->
+        <div class="snacks">
+          <div class="title">
+            <h2>Meistverkaufteste Snacks</h2>
+          </div>
+
+          <div class="grid-3">
+            <div class="card">
+              <!-- AMOUNT OF ORDERS Bestellungen
+                  AMOUNT OF REVENUE Umsatz -->
+              <p class="subtitle">40 Bestellungen</p>
+
+              <!-- menu item name -->
+              <h3>KitKat</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
+  <p style="font-size: 20px; color: white">Daten werden geladen...</p>
+</ngx-spinner>
+<router-outlet></router-outlet>

@@ -1,0 +1,51 @@
+<!-- nav for barowner folder -->
+<div class="nav-owner">
+  <nav class="owner">
+    <div class="item">
+      <img (click)="navigateHomeOwner()" class="logo" src="../../assets/app_icon.png" alt="House of Mandi">
+    </div>
+    <div class="item">
+      <ul>
+        <li><a [class.active]="currentUrl == '/'" (click)="navigateHomeOwner()">{{ 'COMPANY.NAVIGATION.locations' | translate }}</a></li>
+      </ul>
+    </div>
+    <div class="item">
+      <ul>
+        <li (click)="navigateOwnerSettings()"><i class="icon ion-ios-cog"></i></li>
+        <li (click)="logout()"><i class="icon ion-ios-log-out"></i></li>
+      </ul>
+    </div>
+  </nav>
+  <nav class="owner-mobile">
+    <div id="menuToggle">
+      <!--
+      A fake / hidden checkbox is used as click reciever,
+      so you can use the :checked selector on it.
+      -->
+      <input type="checkbox" />
+      
+      <!--
+      Some spans to act as a hamburger.
+      
+      They are acting like a real hamburger,
+      not that McDonalds stuff.
+      -->
+      <span></span>
+      <span></span>
+      <span></span>
+      
+      <!--
+      Too bad the menu has to be inside of the button
+      but hey, it's pure CSS magic.
+      -->
+      <ul id="menu">
+        <li><a [class.active]="currentUrl == '/'" (click)="navigateHomeOwner()">{{ 'COMPANY.NAVIGATION.locations' | translate }}</a></li>
+        <li><a [class.active]="currentUrl == '/einstellungen'" (click)="navigateOwnerSettings()">{{ 'COMPANY.NAVIGATION.settings' | translate }}</a></li>
+        <li><a (click)="logout()">{{ 'COMPANY.NAVIGATION.logout' | translate }}</a></li>
+      </ul>
+    </div>
+    <div class="item">
+      <img (click)="navigateHomeOwner()" class="logo" src="../../assets/app_icon.png" alt="House of Mandi">
+    </div>
+  </nav>
+</div>

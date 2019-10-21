@@ -1,0 +1,34 @@
+<header-bar></header-bar>
+
+<div class="main container">
+  <div class="header">
+    <div class="grid-2">
+      <div class="title">
+        <p class="subtitle">{{ 'LOCATION.SETTINGS.title' | translate }}</p>
+        <h1>{{ 'LOCATION.SETTINGS.SERVICES.title' | translate }}</h1>
+      </div>
+      <div class="buttons">
+        <button (click)="navigateCreateService()" class="button button-primary">{{ 'LOCATION.SETTINGS.SERVICES.createNewService' | translate }}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="services">
+      <div class="grid-2">
+        <div class="small-card" *ngFor="let s of allServices">
+          <div class="subtitles">
+            <p class="danger" (click)="delete(s.serviceId)">{{ 'SUBMIT.delete' | translate }}</p>
+          </div>
+          <p>{{s.service}}</p>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
+  <p style="font-size: 20px; color: white">{{ 'LOCATION.SETTINGS.SERVICES.loading' | translate }}</p>
+</ngx-spinner>
+<router-outlet></router-outlet>
