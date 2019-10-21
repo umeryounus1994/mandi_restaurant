@@ -25,7 +25,7 @@ export class CreateShishaCategoryComponent implements OnInit {
 
   constructor(private api : ApiService, private auth : AuthService,private spinner: NgxSpinnerService, private router : Router) {
     this.category_data.barId = JSON.parse(localStorage.getItem("bar")).barId;
-    this.category_data.page = "Shishakarte";
+    this.category_data.page = "breakfast";
     this.category_data.userId = JSON.parse(localStorage.getItem("data")).uid;
     this.accountType = JSON.parse(localStorage.getItem('data')).accountType;
     if(this.accountType == "barmember") {
@@ -54,7 +54,7 @@ export class CreateShishaCategoryComponent implements OnInit {
           this.loadingText = "Category Added Successfully";
         setTimeout(() => {
           this.spinner.hide();
-          this.router.navigate(['/bar/breakfast/shisha']);
+          this.router.navigate(['/bar/karten/breakfast']);
         }, 1000);
       })
     }
