@@ -159,7 +159,7 @@ import {HttpClient} from '@angular/common/http';
             }
         })
   ],
-   providers: [AuthService,ApiService,ExportService,CartService,{provide: LocationStrategy, useClass: HashLocationStrategy}],
+   providers: [AuthService,ExportService,CartService,{provide: LocationStrategy, useClass: HashLocationStrategy}],
   //providers: [AuthService,ApiService,{provide: LocationStrategy, useClass: PathLocationStrategy}],
   bootstrap: [AppComponent]
 })

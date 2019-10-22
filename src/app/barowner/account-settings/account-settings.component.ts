@@ -106,7 +106,7 @@ export class AccountSettingsComponent implements OnInit {
     this.api.updateUser(this.userId,this.account_data).then(updated => {
       this.loadingText = "";
       this.loadingText = "Deine Accountdetails wurden erfolgreich geändert!";
-      this.auth.saveInfo(this.account_data.firstname,this.account_data.lastname,this.mail);
+      this.auth.saveInfo(this.mail);
       this.router.navigate(['/']);
 
     })

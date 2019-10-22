@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/providers/api.service';
 import { map } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { AngularFirestore } from 'angularfire2/firestore';
 declare var $ :any;
 @Component({
   selector: 'app-shisha',
@@ -16,8 +17,8 @@ export class ShishaComponent implements OnInit {
   menuItems = [];
   selectedCategory = "";
   originalItems=[];
-  constructor(private auth : AuthService, private api : ApiService,private spinner: NgxSpinnerService,private router : Router) {
-    this.barId = JSON.parse(localStorage.getItem("bar")).barId;
+  constructor(private auth : AuthService, private api : ApiService,private spinner: NgxSpinnerService,private router : Router,
+    private afs: AngularFirestore) {
     $(document).ready(function () {
       $('.sPrice').mask('#.##0,00', {reverse: true});
     });
@@ -25,7 +26,7 @@ export class ShishaComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
-    this.api.getBarCategories(this.barId,"Shishakarte").pipe(map((actions : any) => {
+    this.afs.collection('categories', ref=>ref.where('page','==','breakfast')).snapshotChanges().pipe(map((actions : any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;
@@ -50,7 +51,7 @@ export class ShishaComponent implements OnInit {
          }
     })
    
-    this.api.getMenuItems(this.barId,"Shishakarte").pipe(map((actions : any) => {
+    this.afs.collection('menuitems', ref=>ref.where('page','==','breakfast')).snapshotChanges().pipe(map((actions : any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;

@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/providers/auth.service';
 import { ApiService } from 'src/app/providers/api.service';
-import { map } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
+import { Observable } from 'rxjs';
+import { map, finalize } from 'rxjs/operators';
+import { Ng2ImgMaxService } from 'ng2-img-max';
 declare var $ :any;
 @Component({
   selector: 'app-create-shisha-item',
@@ -18,34 +22,40 @@ export class CreateShishaItemComponent implements OnInit {
   menu_item = {
     categoryName : "",
     itemName : "",
-    itemAmount : null,
     price : "",
-    barId : "",
     userId : "",
     categoryId : "",
-    page : "Shishakarte",
+    page : "breakfast",
     make : "no",
     itemId : "",
-    status : "active"
+    status : "active",
+    itemImage: ''
   };
+  spinnerText = '';
   accountType='';
   loadingText='';
-  constructor(public auth : AuthService, public api : ApiService, private spinner : NgxSpinnerService, private router : Router) {
-    this.barId = JSON.parse(localStorage.getItem("bar")).barId;
+  singleFile;
+  errorMessage = '';
+  uploadedImage: Blob;
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  downloadURL: Observable<string>;
+  uploadState: Observable<string>;
+  uploadProgress: Observable<number>;
+  tests: Observable<any[]>;
+  constructor(public auth : AuthService,private afs: AngularFirestore , public api : ApiService, private spinner : NgxSpinnerService, private router : Router,
+    private afStorage: AngularFireStorage,private ng2ImgMax: Ng2ImgMaxService) {
     this.menu_item.userId = JSON.parse(localStorage.getItem("data")).uid;
-    this.accountType = JSON.parse(localStorage.getItem('data')).accountType;
-    if(this.accountType == "barmember") {
-      this.menu_item.userId =  JSON.parse(localStorage.getItem('data')).assignedBy;
-    }
-    this.menu_item.barId = this.barId;
     $(document).ready(function () {
       $('.sPrice').mask('#.##0,00', {reverse: true});
     });
    }
 
   ngOnInit() {
-    this.menu_item.itemId = this.makeid();
-    this.api.getBarCategories(this.barId,"Shishakarte").pipe(map((actions : any) => {
+    this.spinner.show();
+    this.spinnerText = 'Loading Categories';
+    this.menu_item.itemId = this.auth.makeid();
+    this.afs.collection('categories', ref=>ref.where('page','==','breakfast')).snapshotChanges().pipe(map((actions : any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;
@@ -62,7 +72,8 @@ export class CreateShishaItemComponent implements OnInit {
           return 0; //default return value (no sorting)
          });
         this.menu_item.categoryId= this.categories[0].categoryId;
-        this.menu_item.categoryName=this.categories[0].categoryName
+        this.menu_item.categoryName=this.categories[0].categoryName;
+        this.spinner.hide();
     })
   }
 
@@ -79,15 +90,15 @@ i=0;
       this.spinner.show();
     this.api.addMenuItem(this.menu_item).then(added => {
       form.resetForm();
-      this.loadingText = "Menüeintrag erfolgreich erstellt!"
+      this.loadingText = "Adding Menu item"
       setTimeout(() => {
         this.spinner.hide();
-        this.router.navigate(['/bar/karten/shisha']);
+        this.router.navigate(['/bar/karten/breakfast']);
       }, 1000);
     })
   } else {
     this.spinner.show();
-      this.api.getBarMakeMenuItems(this.barId,this.menu_item.page).pipe(map((actions : any) => {
+    this.afs.collection('menuitems', ref=>ref.where("page",'==','breakfast').where("make","==","yes")).snapshotChanges().pipe(map((actions : any) => {
         return actions.map(a => {
           const data = a.payload.doc.data()
           const id = a.payload.doc.id;
@@ -103,8 +114,8 @@ i=0;
                  };
         this.api.updateMenuItem(this.allitems[0].id, data1).then(updated => {
           this.api.addMenuItem(this.menu_item).then(added => {
-            this.loadingText = "Menüeintrag erfolgreich angepasst!";
-            this.router.navigate(['/bar/karten/shisha']);
+            this.loadingText = "Menu Item Added Successfully";
+            this.router.navigate(['/bar/karten/breakfast']);
           })
         }) 
         this.i++;
@@ -113,49 +124,12 @@ i=0;
         if(this.i == 0)
         {
           this.api.addMenuItem(this.menu_item).then(added => {
-          this.loadingText = "Menüeintrag erfolgreich angepasst!";
-          this.router.navigate(['/bar/karten/shisha']);
+            this.loadingText = "Menu Item Added Successfully";
+          this.router.navigate(['/bar/karten/breakfast']);
         })
       }
       this.i++;
       }
-
-      //     let data1 = {
-      //       make : "no"
-      //          };
-      // this.api.updateMenuItem(this.allitems[0].id, data1).then(updated => {
-      //   this.api.updateMenuItem(this.menu_item.itemId,this.menu_item).then(up => {
-      //     this.loadingText = "Menüeintrag erfolgreich erstellt!";
-           
-      //       setTimeout(() => {
-      //         this.spinner.hide();
-      //       this.router.navigate(['/bar/karten/shisha']);
-      //       }, 1000);
-      //   })
-    
-      // })
-      //     for(var i =0 ; i < this.allitems.length;i++) {
-      //       let data = {
-      //         make : "no"
-      //       };
-      //       if(this.allitems[i].itemId != this.menu_item.itemId)
-      //       {
-      //       this.api.updateMenuItem(this.allitems[i].itemId,data).then(updated => {
-      //       })
-      //       }
-  
-      //     }
-
-      //     this.api.addMenuItem(this.menu_item).then(added => {
-      //       form.resetForm();
-      //       this.loadingText = "Menüeintrag erfolgreich erstellt!";
-           
-      //       setTimeout(() => {
-      //         this.spinner.hide();
-      //       this.router.navigate(['/bar/karten/shisha']);
-      //       }, 1000);
-          
-      // })
      
     })
 
@@ -164,12 +138,40 @@ i=0;
   makeToday(today) {
     this.menu_item.make = today;
   }
-  makeid() {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (var i = 0; i < 20; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    return text;
+
+    uploadSingle(event) {
+      this.spinner.show();
+      this.spinnerText = '';
+      this.spinnerText='Uploading Image';
+    this.singleFile = event.target.files[0];
+    this.ng2ImgMax.compressImage(this.singleFile,0.20).subscribe(
+      result => {
+        //console.log(result);
+        this.uploadedImage = new File([result], result.name);
+        const id = Math.random().toString(36).substring(2);
+        const ref = this.afStorage.ref(id);
+        this.task = ref.put(this.uploadedImage);
+        this.uploadState = this.task.snapshotChanges().pipe(map(s => s.state));
+        this.uploadProgress = this.task.percentageChanges();
+        this.task.snapshotChanges().pipe(
+          finalize(() => {
+            ref.getDownloadURL().subscribe(sub => {
+              var data = sub;
+              this.menu_item.itemImage = data;
+              this.spinner.hide();
+            })
+          })
+        )
+          .subscribe()
+      },
+      error => {
+        
+        this.errorMessage = ""
+        this.errorMessage = error;
+        console.log('😢 Oh no!', error);
+      }
+    );
+  
   }
 
 }

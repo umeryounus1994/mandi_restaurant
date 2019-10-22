@@ -15,11 +15,9 @@ export class CardsComponent implements OnInit {
     if(this.auth.accountStatusDisable) {
       this.router.navigate(["/"]);
     }
-    this.barName = JSON.parse(localStorage.getItem("bar")).barName;
   }
 
   ngOnInit() {
-    this.barName = JSON.parse(localStorage.getItem("bar")).barName;
   }
 
   navigateShishaCard() {
