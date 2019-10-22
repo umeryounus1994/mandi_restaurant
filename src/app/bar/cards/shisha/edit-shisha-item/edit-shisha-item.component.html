@@ -4,7 +4,7 @@
   <div class="header">
     <div class="title">
       <p class="subtitle">Breakfast</p>
-      <h1>{{ 'LOCATION.CARDS.MENUITEM.EDIT.title' | translate }}</h1>
+      <h1>Edit Menu Item</h1>
       <p class="success">{{ loadingText }}</p>
     </div>
   </div>
@@ -16,8 +16,7 @@
           <span class="input-label">{{ 'LOCATION.CARDS.MENUITEM.FORM.category' | translate }}</span>
           <div class="input-wrapper text-wrapper" style="margin-top: -4px; height: 18px;">
             <select (change)="saveCategory($event.target.value)" name="categories" [(ngModel)]="cId">
-              <option *ngFor ="let c of categories" value="{{c.categoryId}},{{c.categoryName}}">{{c.categoryName}}:
-                  <span class="sPrice">{{c.price}}</span>€</option>
+              <option *ngFor ="let c of categories" value="{{c.categoryId}},{{c.categoryName}}">{{c.categoryName}}</option>
             </select>
           </div>
         </label>
@@ -27,13 +26,21 @@
             <input type="text" [(ngModel)]="menu_item.itemName" name="itemName" id="menuitemname" required>
           </div>
         </label>
-        <label for="itemAmount">
-          <span class="input-label">{{ 'LOCATION.CARDS.MENUITEM.FORM.amount' | translate }}</span>
+        <label for="price">
+          <span class="input-label">Price</span>
           <div class="input-wrapper text-wrapper">
-            <input type="number" [(ngModel)]="menu_item.itemAmount" name="itemAmount" id="itemAmount">
+            <input type="number" [(ngModel)]="menu_item.price" name="price" id="price">
+          </div>
+        </label>
+        <label for="itemImage">
+          <span class="input-label">Item Image</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="file" (change)="uploadSingle($event)" accept=".png,.jpg,.gif" class="form-control" required>
           </div>
         </label>
       </div>
+      <br>
+      <img src="{{menu_item.itemImage}}" style="width: 30% !important;"/>
       
       <div class="buttons">
         <button type="submit" class="button button-primary">{{ 'SUBMIT.update' | translate }}</button>
@@ -45,6 +52,6 @@
 </div>
 
 <ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
-  <p style="font-size: 20px; color: white">Loading</p>
+  <p style="font-size: 20px; color: white">{{spinnerText}}</p>
 </ngx-spinner>
 <router-outlet></router-outlet>

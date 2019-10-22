@@ -2,9 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/providers/auth.service';
 import { ApiService } from 'src/app/providers/api.service';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgForm } from '@angular/forms';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
+import { Observable } from 'rxjs';
+import { map, finalize } from 'rxjs/operators';
+import { Ng2ImgMaxService } from 'ng2-img-max';
 declare var $ :any;
 @Component({
   selector: 'app-edit-shisha-item',
@@ -16,11 +20,12 @@ export class EditShishaItemComponent implements OnInit {
   itemId = "";
   menu_item = {
     itemName : "",
-    itemAmount : "",
+    price : "",
     make : "",
     categoryId : "",
     categoryName : "",
-    status : ""
+    status : "",
+    itemImage : ''
 
 
   }
@@ -29,8 +34,21 @@ export class EditShishaItemComponent implements OnInit {
   loadingText = "";
   cId;
   makee = "";
-  constructor(public auth : AuthService,public api : ApiService, public router : Router,private spinner: NgxSpinnerService) { 
-    this.barId = JSON.parse(localStorage.getItem("bar")).barId;
+  uploadedImage: Blob;
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  downloadURL: Observable<string>;
+  uploadState: Observable<string>;
+  uploadProgress: Observable<number>;
+  tests: Observable<any[]>;
+  singleFile;
+  spinnerText = '';
+  errorMessage= '';
+  constructor(public auth : AuthService,
+    private afs: AngularFirestore,
+    public api : ApiService, public router : Router,private spinner: NgxSpinnerService,
+    private afStorage: AngularFireStorage,private ng2ImgMax: Ng2ImgMaxService) { 
+   
     this.itemId = JSON.parse(localStorage.getItem("item")).itemId;
     $(document).ready(function () {
       $('.sPrice').mask('#.##0,00', {reverse: true});
@@ -39,7 +57,7 @@ export class EditShishaItemComponent implements OnInit {
   
     ngOnInit() {
       this.spinner.show();
-      this.api.getSingleMenuItem(this.itemId).pipe(map((actions : any) => {
+      this.afs.collection('menuitems', ref=>ref.where('itemId','==',this.itemId)).snapshotChanges().pipe(map((actions : any) => {
         return actions.map(a => {
           const data = a.payload.doc.data()
           const id = a.payload.doc.id;
@@ -48,22 +66,18 @@ export class EditShishaItemComponent implements OnInit {
       })).subscribe(data=>{
         this.spinner.hide();
          this.menu_item.itemName = data[0].itemName;
-         if( isNaN(data[0].itemAmount)) {
-           this.menu_item.itemAmount=''
-          
-         } else {
-          this.menu_item.itemAmount=data[0].itemAmount
-         }
-        
+       
+         this.menu_item.price = data[0].price;
          this.menu_item.make = data[0].make;
          this.menu_item.categoryId = data[0].categoryId;
          this.menu_item.categoryName = data[0].categoryName;
+         this.menu_item.itemImage = data[0].itemImage;
          this.cId = data[0].categoryId+","+data[0].categoryName;
          this.menu_item.status = data[0].status;
        
          this.makee = data[0].make;
       })
-      this.api.getBarCategories(this.barId,"Shishakarte").pipe(map((actions : any) => {
+      this.afs.collection('categories', ref=>ref.where('page','==','breakfast')).snapshotChanges().pipe(map((actions : any) => {
         return actions.map(a => {
           const data = a.payload.doc.data()
           const id = a.payload.doc.id;
@@ -88,7 +102,7 @@ export class EditShishaItemComponent implements OnInit {
       status : st
     };
     this.api.updateMenuItem(this.itemId,data).then(added => {
-      this.router.navigate(['/bar/karten/shisha']);
+      this.router.navigate(['/bar/karten/breakfast']);
       setTimeout(() => {
       }, 1000);
     })
@@ -104,15 +118,15 @@ export class EditShishaItemComponent implements OnInit {
    onSubmit(form : NgForm) {
     if(this.menu_item.make == "no") {
     this.api.updateMenuItem(this.itemId,this.menu_item).then(added => {
-      this.loadingText = "Menüeintrag erfolgreich angepasst!"
-      this.router.navigate(['/bar/karten/shisha']);
+      this.loadingText = "Menu Item updated successfully"
+      this.router.navigate(['/bar/karten/breakfast']);
       setTimeout(() => {
       
         //this.router.navigate(['/bar/karten/shisha']);
       }, 1000);
     })
   } else {
-    this.api.getBarMakeMenuItems(this.barId,"Shishakarte").pipe(map((actions : any) => {
+    this.afs.collection('menuitems', ref=>ref.where("page",'==','breakfast').where("make","==","yes")).snapshotChanges().pipe(map((actions : any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;
@@ -127,8 +141,8 @@ export class EditShishaItemComponent implements OnInit {
                };
       this.api.updateMenuItem(this.allitems[0].id, data1).then(updated => {
         this.api.updateMenuItem(this.itemId,this.menu_item).then(up => {
-          this.loadingText = "Menüeintrag erfolgreich angepasst!";
-          this.router.navigate(['/bar/karten/shisha']);
+          this.loadingText = "Updated successfully";
+          this.router.navigate(['/bar/karten/breakfast']);
         })
       }) 
       this.i++;
@@ -137,8 +151,8 @@ export class EditShishaItemComponent implements OnInit {
       if(this.i == 0)
       {
       this.api.updateMenuItem(this.itemId,this.menu_item).then(up => {
-        this.loadingText = "Menüeintrag erfolgreich angepasst!";
-        this.router.navigate(['/bar/karten/shisha']);
+        this.loadingText = "Updated successfully";
+        this.router.navigate(['/bar/karten/breakfast']);
       })
     }
     this.i++;
@@ -149,8 +163,8 @@ export class EditShishaItemComponent implements OnInit {
                  };
         this.api.updateMenuItem(this.allitems[0].id, data1).then(updated => {
           this.api.updateMenuItem(this.itemId,this.menu_item).then(up => {
-            this.loadingText = "Menüeintrag erfolgreich angepasst!";
-            this.router.navigate(['/bar/karten/shisha']);
+            this.loadingText = "Updated successfully";
+            this.router.navigate(['/bar/karten/breakfast']);
           })
 
         })
@@ -164,8 +178,43 @@ export class EditShishaItemComponent implements OnInit {
   }
   deleteItem() {
     this.api.deleteMenuItems(this.itemId).then(deleted => {
-      this.router.navigate(['/bar/karten/shisha']);
+      this.router.navigate(['/bar/karten/breakfast']);
     })
   }
+
+  uploadSingle(event) {
+    this.spinner.show();
+    this.spinnerText = '';
+    this.spinnerText='Uploading Image';
+  this.singleFile = event.target.files[0];
+  this.ng2ImgMax.compressImage(this.singleFile,0.20).subscribe(
+    result => {
+      //console.log(result);
+      this.uploadedImage = new File([result], result.name);
+      const id = Math.random().toString(36).substring(2);
+      const ref = this.afStorage.ref(id);
+      this.task = ref.put(this.uploadedImage);
+      this.uploadState = this.task.snapshotChanges().pipe(map(s => s.state));
+      this.uploadProgress = this.task.percentageChanges();
+      this.task.snapshotChanges().pipe(
+        finalize(() => {
+          ref.getDownloadURL().subscribe(sub => {
+            var data = sub;
+            this.menu_item.itemImage = data;
+            this.spinner.hide();
+          })
+        })
+      )
+        .subscribe()
+    },
+    error => {
+      
+      this.errorMessage = ""
+      this.errorMessage = error;
+      console.log('😢 Oh no!', error);
+    }
+  );
+
+}
 
 }
