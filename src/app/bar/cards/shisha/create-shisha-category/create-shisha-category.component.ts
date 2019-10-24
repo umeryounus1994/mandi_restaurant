@@ -15,7 +15,6 @@ export class CreateShishaCategoryComponent implements OnInit {
   category_data = {
     categoryName : "",
     page : "",
-    barId : "",
     userId : "",
     categoryId : ""
   };
@@ -24,13 +23,10 @@ export class CreateShishaCategoryComponent implements OnInit {
   accountType='';
 
   constructor(private api : ApiService, private auth : AuthService,private spinner: NgxSpinnerService, private router : Router) {
-    this.category_data.barId = JSON.parse(localStorage.getItem("bar")).barId;
+   
     this.category_data.page = "breakfast";
     this.category_data.userId = JSON.parse(localStorage.getItem("data")).uid;
     this.accountType = JSON.parse(localStorage.getItem('data')).accountType;
-    if(this.accountType == "barmember") {
-      this.category_data.userId =  JSON.parse(localStorage.getItem('data')).assignedBy;
-    }
    }
 
   ngOnInit() {
