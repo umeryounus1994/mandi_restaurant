@@ -41,7 +41,7 @@
         <div class="orders">
           <div class="grid-1">
             <div class="small-card danger-bg" *ngFor="let p of pending" (click)="orderDetail(p.userOrderId,p.userName)">
-              <p>{{ 'LOCATION.ORDERS.table' | translate }} {{p.tableNo}} ({{p.tableName}}): {{p.userName}} - {{p.orderTime}}Uhr</p>
+              <p> {{p.userName}} - {{p.orderTime}}Uhr</p>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@
         <div class="orders">
           <div class="grid-1">
             <div class="small-card" *ngFor="let c of completed" (click)="orderDetail(c.userOrderId,c.userName)">
-              <p>{{ 'LOCATION.ORDERS.table' | translate }} {{c.tableName}}: {{c.userName}}</p>
+              <p> {{c.userName}}</p>
             </div>
           </div>
         </div>

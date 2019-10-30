@@ -25,7 +25,8 @@ export class EditShishaItemComponent implements OnInit {
     categoryId : "",
     categoryName : "",
     status : "",
-    itemImage : ''
+    itemImage : '',
+    description:''
 
 
   }
@@ -72,6 +73,7 @@ export class EditShishaItemComponent implements OnInit {
          this.menu_item.categoryId = data[0].categoryId;
          this.menu_item.categoryName = data[0].categoryName;
          this.menu_item.itemImage = data[0].itemImage;
+         this.menu_item.description = data[0].description;
          this.cId = data[0].categoryId+","+data[0].categoryName;
          this.menu_item.status = data[0].status;
        

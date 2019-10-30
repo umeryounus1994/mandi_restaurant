@@ -49,7 +49,6 @@ export class OrderComponent implements OnInit {
     this.orderId = JSON.parse(localStorage.getItem("order")).orderId;
     this.orderedByUser = JSON.parse(localStorage.getItem("order")).orderedBy;
     this.userId = JSON.parse(localStorage.getItem("data")).uid;
-    this.barId = JSON.parse(localStorage.getItem("bar")).barId;
     $(document).ready(function () {
       $('.menuitemprice').mask('#.##0,00', {reverse: true});
     });
@@ -77,25 +76,6 @@ export class OrderComponent implements OnInit {
           this.orderedByUserId = data[0].orderedBy
           this.orderDate = data[0].orderDate;
           this.orderTime = data[0].orderTime;
-          this.tableNo = data[0].tableNo;
-          this.api.getTables(this.barId)
-          .pipe(map((actions: any) => {
-            return actions.map(a => {
-              const data = a.payload.doc.data()
-              const id = a.payload.doc.id;
-              return { id, ...data };
-            });
-          })).subscribe(data1 => {
-            
-           
-           data1.forEach(element1 => {
-             if(element1.tableNo == this.tableNo){
-                this.tableName=element1.tableName
-             }
-            
-           });
-
-          });
           this.orderTotal = data[0].total;
 
           if (this.orderTotal.toString().indexOf(".") != -1) {
@@ -108,12 +88,12 @@ export class OrderComponent implements OnInit {
           if (this.orderStatus == "paid") {
             this.successMessage = "";
             this.successMessage =
-              "Die Bestellung wurde bereits als bezahlt markiert.";
+              "Order Has already been paid";
           }
         }
       });
-    let orderDetails = this.api
-      .getOrdersDetails(this.orderId)
+    let orderDetails = this.afs.collection('orders', ref=>ref.where('userOrderId','==',this.orderId).orderBy("orderTime","desc"))
+    .snapshotChanges()
       .pipe(
         map((actions: any) => {
           return actions.map(a => {
@@ -132,9 +112,7 @@ export class OrderComponent implements OnInit {
             var time = {
               orderTime: oData.orderTime
             };
-
-            this.api
-              .getAllOrderOnOrderId(oData.orderId)
+            this.afs.collection('orderDetails', ref=>ref.where('orderId','==',oData.orderId)).snapshotChanges()
               .pipe(
                 map((actions: any) => {
                   return actions.map(a => {
@@ -200,7 +178,7 @@ export class OrderComponent implements OnInit {
       this.foodsItem = [];
       this.allItems = [];
       ordData.forEach(element => {
-        if (element.page == "Shishakarte") {
+        if (element.page == "breakfast") {
           this.shishaItems.push(element);
         }
         if (element.page == "Getrankekarte") {

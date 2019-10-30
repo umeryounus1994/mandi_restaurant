@@ -5,7 +5,7 @@
     <div class="grid-2">
       <div class="title">
         <p class="subtitle">{{ 'LOCATION.ORDERS.title' | translate }}</p>
-        <h1>{{ 'LOCATION.ORDERS.table' | translate }} {{tableNo}} ({{tableName}}): <br>{{orderedBy}} - <span class="menuitemprice">
+        <h1>{{orderedBy}} - <span class="menuitemprice">
           {{total}}
         </span>€</h1>
         <p class="success">{{ successMessage }}</p>
@@ -31,24 +31,11 @@
         </div>  
       </div>
       <div class="grid-2">
-        <div class="services" *ngIf='t.orderDeatils[3].length > 0'>
-          <div class="title">
-            <h3>Service</h3>
-          </div>
-          <div class="grid-1">
-            <div class="small-card" *ngFor="let o of t.orderDeatils[3]">
-              <div class="subtitles">
-                  
-              </div>
-              <p>{{o.item}}</p>
-            </div>
-          </div>
-        </div>
 
         <!-- If there a menu items from shishaCard, show the following -->
         <div class="shisha" *ngIf='t.orderDeatils[0].length > 0'>
           <div class="title">
-            <h3>{{ 'LOCATION.CARDS.shisha' | translate }}</h3>
+            <h3>Breakfast</h3>
           </div>
           <div class="grid-1">
             <div class="small-card" *ngFor="let o of t.orderDeatils[0]">
@@ -103,6 +90,6 @@
 </div>
 
 <ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
-  <p style="font-size: 20px; color: white">Daten werden geladen...</p>
+  <p style="font-size: 20px; color: white">Loading Order Data...</p>
 </ngx-spinner>
 <router-outlet></router-outlet>

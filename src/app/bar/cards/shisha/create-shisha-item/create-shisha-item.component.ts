@@ -29,7 +29,8 @@ export class CreateShishaItemComponent implements OnInit {
     make : "no",
     itemId : "",
     status : "active",
-    itemImage: ''
+    itemImage: '',
+    description:''
   };
   spinnerText = '';
   accountType='';
@@ -85,6 +86,18 @@ export class CreateShishaItemComponent implements OnInit {
   allitems = [];
 i=0;
   onSubmit(form : NgForm) {
+    if(this.menu_item.categoryId === ''){
+      this.loadingText = 'Select Category';
+      return false;
+    }
+    if(this.menu_item.itemName === ''){
+      this.loadingText = 'Add Item Name';
+      return false;
+    }
+    if(this.menu_item.price === ''){
+      this.loadingText = 'Add Price';
+      return false;
+    }
     
     if(this.menu_item.make == "no") {
       this.spinner.show();

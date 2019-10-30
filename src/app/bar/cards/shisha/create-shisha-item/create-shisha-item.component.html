@@ -38,6 +38,12 @@
             <input type="file" (change)="uploadSingle($event)" accept=".png,.jpg,.gif" class="form-control" required>
           </div>
         </label>
+        <label for="itemImage">
+          <span class="input-label">Item Description</span>
+          <div class="input-wrapper text-wrapper">
+            <input type="text" class="form-control" [(ngModel)]="menu_item.description" required>
+          </div>
+        </label>
       </div>
       
       <button type="submit" class="button button-primary">Create</button>

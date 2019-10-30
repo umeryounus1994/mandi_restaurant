@@ -31,7 +31,7 @@ export class OrdersComponent implements OnInit {
   accountType=""
   constructor(private auth : AuthService,private api : ApiService,private spinner : NgxSpinnerService, private router : Router,private afs : AngularFirestore) {
     this.userId = JSON.parse(localStorage.getItem('data')).uid;
-    this.barId = JSON.parse(localStorage.getItem('bar')).barId;
+
     this.accountType = JSON.parse(localStorage.getItem('data')).accountType;
     if(this.auth.accountStatusDisable) {
       this.router.navigate(["/"]);
@@ -40,39 +40,13 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit() {
     
-    this.barName = JSON.parse(localStorage.getItem("bar")).barName;
 
    window.localStorage.removeItem("cart")
    this.auth.cartData = []
    this.spinner.show();
 
-        
-        this.api.getTables(this.barId).pipe(map((actions: any) => {
-          return actions.map(a => {
-            const data = a.payload.doc.data()
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          });
-        })).subscribe(data => {
-          if(data.length > 0) {
-            this.tables = data;
-  
-          }
-          this.tables.sort(function(a, b){
-            var nameA=a.tableNo, nameB=b.tableNo;
-            if (nameA < nameB) //sort string ascending
-             return -1;
-            if (nameA > nameB)
-             return 1;
-            return 0; //default return value (no sorting)
-           });
-         
-        })
-       
-       
 
-
-    this.api.getOrders(this.barId,"pending").pipe(map((actions: any) => {
+   this.afs.collection('userOrders', ref=>ref.where("status","==",'pending')).snapshotChanges().pipe(map((actions: any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;
@@ -81,27 +55,6 @@ export class OrdersComponent implements OnInit {
     })).subscribe(data => {
       if(data.length > 0) {
         this.pending = data;
-        this.pending.forEach((element)=> {
-          var tableNo=element.tableNo;
-          
-          this.api.getTables(this.barId)
-          .pipe(map((actions: any) => {
-            return actions.map(a => {
-              const data = a.payload.doc.data()
-              const id = a.payload.doc.id;
-              return { id, ...data };
-            });
-          })).subscribe(data => {
-            this.tableNames=[]
-           
-           data.forEach(element1 => {
-             if(element1.tableNo == tableNo){
-               element.tableName = element1.tableName
-             }
-           });
-          })
-
-        })
       
        
         this.allpending = data;
@@ -109,7 +62,7 @@ export class OrdersComponent implements OnInit {
         this.noPending = true;
       }
     })
-    this.api.getOrders(this.barId,"completed").pipe(map((actions: any) => {
+    this.afs.collection('userOrders', ref=>ref.where("status","==",'completed')).snapshotChanges().pipe(map((actions: any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;
@@ -118,31 +71,12 @@ export class OrdersComponent implements OnInit {
     })).subscribe(data => {
       if(data.length > 0) {
         this.completed = data;
-        this.completed.forEach((element)=> {
-          var tableNo=element.tableNo;
-          
-          this.api.getTables(this.barId)
-          .pipe(map((actions: any) => {
-            return actions.map(a => {
-              const data = a.payload.doc.data()
-              const id = a.payload.doc.id;
-              return { id, ...data };
-            });
-          })).subscribe(data => {
-           data.forEach(element1 => {
-             if(element1.tableNo == tableNo){
-               element.tableName = element1.tableName
-             }
-           });
-          })
-
-        })
         this.allcompleted = data;
       }else {
         this.noCompleted = true;
       }
     })
-    this.api.getOrders(this.barId,"paid").pipe(map((actions: any) => {
+    this.afs.collection('userOrders', ref=>ref.where("status","==",'paid')).snapshotChanges().pipe(map((actions: any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;
