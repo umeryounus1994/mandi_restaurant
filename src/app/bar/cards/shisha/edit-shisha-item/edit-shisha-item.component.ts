@@ -51,9 +51,7 @@ export class EditShishaItemComponent implements OnInit {
     private afStorage: AngularFireStorage,private ng2ImgMax: Ng2ImgMaxService) { 
    
     this.itemId = JSON.parse(localStorage.getItem("item")).itemId;
-    $(document).ready(function () {
-      $('.sPrice').mask('#.##0,00', {reverse: true});
-    });
+
   }
   
     ngOnInit() {

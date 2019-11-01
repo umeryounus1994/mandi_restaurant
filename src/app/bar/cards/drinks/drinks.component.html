@@ -5,7 +5,7 @@
     <div class="grid-2">
       <div class="title">
         <p class="subtitle">{{ 'LOCATION.CARDS.title' | translate }}</p>
-        <h1>{{ 'LOCATION.CARDS.CARD.drinks' | translate }}</h1>
+        <h1>Lunch</h1>
       </div>
       <div class="buttons">
         <button (click)="navigateNewCategory()" class="button button-primary">{{ 'LOCATION.CARDS.CATEGORY.new' | translate }}</button>
@@ -29,7 +29,7 @@
 
   <div class="content">
     <div class="title">
-      <h2>{{ 'LOCATION.CARDS.MENUITEM.title' | translate }} <i (click)="navigateNewMenuItem()" class="icon ion-ios-add"></i></h2>
+      <h2>Menu Items <i (click)="navigateNewMenuItem()" class="icon ion-ios-add"></i></h2>
     </div>
     <div class="menu-items">
       <div class="grid-2">
@@ -48,6 +48,6 @@
 </div>
 
 <ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-beat">
-  <p style="font-size: 20px; color: white">{{ 'LOCATION.CARDS.loading' | translate }}</p>
+  <p style="font-size: 20px; color: white">Loading Categories</p>
 </ngx-spinner>
 <router-outlet></router-outlet>

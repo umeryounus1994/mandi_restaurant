@@ -128,23 +128,23 @@ const routes: Routes = [
     component: EditShishaItemComponent
   },
   {
-    path: 'bar/karten/getraenke',
+    path: 'bar/karten/lunch',
     component: DrinksComponent
   },
   {
-    path: 'bar/karten/getraenke/kategorie-erstellen',
+    path: 'bar/karten/lunch/kategorie-erstellen',
     component: CreateDrinksCategoryComponent
   },
   {
-    path: 'bar/karten/getraenke/kategorie-anpassen',
+    path: 'bar/karten/lunch/kategorie-anpassen',
     component: EditDrinksCategoryComponent
   },
   {
-    path: 'bar/karten/getraenke/eintrag-erstellen',
+    path: 'bar/karten/lunch/eintrag-erstellen',
     component: CreateDrinksItemComponent
   },
   {
-    path: 'bar/karten/getraenke/eintrag-anpassen',
+    path: 'bar/karten/lunch/eintrag-anpassen',
     component: EditDrinksItemComponent
   },
   {

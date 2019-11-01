@@ -44,7 +44,8 @@ export class CreateShishaItemComponent implements OnInit {
   uploadState: Observable<string>;
   uploadProgress: Observable<number>;
   tests: Observable<any[]>;
-  constructor(public auth : AuthService,private afs: AngularFirestore , public api : ApiService, private spinner : NgxSpinnerService, private router : Router,
+  constructor(public auth : AuthService,private afs: AngularFirestore , public api : ApiService, private spinner : NgxSpinnerService, 
+    private router : Router,
     private afStorage: AngularFireStorage,private ng2ImgMax: Ng2ImgMaxService) {
     this.menu_item.userId = JSON.parse(localStorage.getItem("data")).uid;
     $(document).ready(function () {

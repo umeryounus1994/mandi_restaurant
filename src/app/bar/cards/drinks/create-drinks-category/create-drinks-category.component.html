@@ -13,7 +13,7 @@
     <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
       <div class="grid-2">
         <label for="categoryName">
-          <span class="input-label">{{ 'LOCATION.CARDS.CATEGORY.FORM.name' | translate }}</span>
+          <span class="input-label">Category Name</span>
           <div class="input-wrapper text-wrapper">
             <input type="text" [(ngModel)]="category_data.categoryName" name="categoryName" id="categoryname" required>
           </div>
@@ -26,6 +26,6 @@
 </div>
 
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="large" color="#fff" type="ball-beat">
-  <p style="font-size: 20px; color: white">{{ 'LOCATION.CARDS.CATEGORY.CReATE.loading' | translate }}</p>
+  <p style="font-size: 20px; color: white">Creating Categories</p>
 </ngx-spinner>
 <router-outlet></router-outlet>

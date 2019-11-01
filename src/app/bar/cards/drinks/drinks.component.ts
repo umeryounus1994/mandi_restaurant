@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/providers/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-drinks',
@@ -17,13 +18,13 @@ export class DrinksComponent implements OnInit {
   menuItems = [];
   selectedCategory = "";
   originalItems = [];
-  constructor(private auth : AuthService, private api : ApiService,private spinner: NgxSpinnerService,private router : Router) {
-    this.barId = JSON.parse(localStorage.getItem("bar")).barId;
+  constructor(private auth : AuthService, private api : ApiService,private spinner: NgxSpinnerService,private router : Router,
+    private afs: AngularFirestore) {
    }
 
   ngOnInit() {
     this.spinner.show();
-    this.api.getBarCategories(this.barId,"Getrankekarte").pipe(map((actions : any) => {
+    this.afs.collection('categories', ref=>ref.where('page','==','lunch')).snapshotChanges().pipe(map((actions : any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;
@@ -47,7 +48,7 @@ export class DrinksComponent implements OnInit {
             this.saveCategory(categoryId)
            }
     })
-    this.api.getMenuItems(this.barId,"Getrankekarte").pipe(map((actions : any) => {
+    this.afs.collection('menuitems', ref=>ref.where('page','==','lunch')).snapshotChanges().pipe(map((actions : any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;
@@ -110,21 +111,21 @@ export class DrinksComponent implements OnInit {
 
   editCategory() {
     if(this.selectedCategory != ""){
-      this.router.navigate(['/bar/karten/getraenke/kategorie-anpassen']);
+      this.router.navigate(['/bar/karten/lunch/kategorie-anpassen']);
     }
   }
   
   editMenu(Item) {
     this.auth.saveMenuItem(Item);
-    this.router.navigate(['/bar/karten/getraenke/eintrag-anpassen']);
+    this.router.navigate(['/bar/karten/lunch/eintrag-anpassen']);
   }
 
   navigateNewCategory() {
-    this.router.navigate(['/bar/karten/getraenke/kategorie-erstellen']);
+    this.router.navigate(['/bar/karten/lunch/kategorie-erstellen']);
   }
 
   navigateNewMenuItem() {
-    this.router.navigate(['/bar/karten/getraenke/eintrag-erstellen']);
+    this.router.navigate(['/bar/karten/lunch/eintrag-erstellen']);
   }
 
 }

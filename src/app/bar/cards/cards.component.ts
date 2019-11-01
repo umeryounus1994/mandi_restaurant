@@ -25,7 +25,7 @@ export class CardsComponent implements OnInit {
   }
 
   navigateDrinksCard() {
-    this.router.navigate(['/bar/karten/getraenke']);
+    this.router.navigate(['/bar/karten/lunch']);
   }
 
   navigateFoodsCard() {

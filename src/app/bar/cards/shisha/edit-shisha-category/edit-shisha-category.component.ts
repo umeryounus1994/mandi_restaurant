@@ -15,7 +15,6 @@ export class EditShishaCategoryComponent implements OnInit {
 
   update_data = {
     categoryName : '',
-    price : ''
   };
   categoryId;
   loadingText = "";
@@ -23,7 +22,7 @@ export class EditShishaCategoryComponent implements OnInit {
 
   constructor(public auth : AuthService,public api : ApiService,private spinner: NgxSpinnerService,private router : Router) {
     $(document).ready(function () {
-      $('#categoryprice').mask('#.##0,00', {reverse: true});
+      $('#categoryprice').mask('#.##0.00', {reverse: true});
     });
    }
 
@@ -39,23 +38,16 @@ export class EditShishaCategoryComponent implements OnInit {
     })).subscribe(data=>{
       this.spinner.hide();
        this.update_data.categoryName = data[0].categoryName;
-       this.update_data.price = data[0].price;
     })
   }
   onSubmit(form : NgForm) {
 
-    var regex = /^[0-9,\b]+$/;
-    if (!regex.test(this.update_data.price)) {
-      this.loadingText=""
-      this.loadingText="Price must be a number or comma";
-      return false;
-    }
     this.loadingText = "";
-    this.loadingText = "Kategorie wurde erfolgreich angepasst!";
+    this.loadingText = "Editing category";
     this.api.updateCategory(this.categoryId, this.update_data).then(updated => {
       
       setTimeout(() => {
-        this.router.navigate(['/bar/karten/shisha']);
+        this.router.navigate(['/bar/karten/breakfast']);
       }, 1000);
      
     
@@ -64,12 +56,11 @@ export class EditShishaCategoryComponent implements OnInit {
   }
   deleteCategory() {
     this.update_data.categoryName = "";
-    this.update_data.price = "";
     this.loadingText = "";
-    this.loadingText = "Kategorie wurde erfolgreich gelöscht";
+    this.loadingText = "Deleting Category";
     this.api.deleteCategory(this.categoryId).then(deleted => {
       setTimeout(() => {
-        this.router.navigate(['/bar/karten/shisha']);
+        this.router.navigate(['/bar/karten/breakfast']);
       }, 2000);
     })
 

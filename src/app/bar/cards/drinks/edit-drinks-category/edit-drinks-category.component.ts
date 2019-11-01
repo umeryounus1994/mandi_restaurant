@@ -40,11 +40,11 @@ export class EditDrinksCategoryComponent implements OnInit {
   }
   onSubmit(form : NgForm) {
     this.loadingText = "";
-    this.loadingText = "Kategorie wurde erfolgreich angepasst!";
+    this.loadingText = "Editing category";
     this.api.updateCategory(this.categoryId, this.update_data).then(updated => {
       
       setTimeout(() => {
-        this.router.navigate(['/bar/karten/getraenke']);
+        this.router.navigate(['/bar/karten/lunch']);
       }, 1000);
      
     
@@ -55,10 +55,10 @@ export class EditDrinksCategoryComponent implements OnInit {
     this.update_data.categoryName = "";
     this.update_data.price = "";
     this.loadingText = "";
-    this.loadingText = "Kategorie wurde erfolgreich gelöscht!";
+    this.loadingText = "Deleting Category";
     this.api.deleteCategory(this.categoryId).then(deleted => {
       setTimeout(() => {
-        this.router.navigate(['/bar/karten/getraenke']);
+        this.router.navigate(['/bar/karten/lunch']);
       }, 1000);
     })
   }

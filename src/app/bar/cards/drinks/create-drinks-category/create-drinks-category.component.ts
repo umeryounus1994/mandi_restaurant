@@ -16,7 +16,6 @@ export class CreateDrinksCategoryComponent implements OnInit {
     categoryName : "",
     price : "",
     page : "",
-    barId : "",
     userId : "",
     categoryId : ""
   };
@@ -24,13 +23,9 @@ export class CreateDrinksCategoryComponent implements OnInit {
   errorMessage = '';
   accountType='';
   constructor(private api : ApiService, private auth : AuthService,private spinner: NgxSpinnerService, private router : Router) {
-    this.category_data.barId = JSON.parse(localStorage.getItem("bar")).barId;
-    this.category_data.page = "Getrankekarte";
+    this.category_data.page = "lunch";
     this.category_data.userId = JSON.parse(localStorage.getItem("data")).uid;
     this.accountType = JSON.parse(localStorage.getItem('data')).accountType;
-    if(this.accountType == "barmember") {
-      this.category_data.userId =  JSON.parse(localStorage.getItem('data')).assignedBy;
-    }
    }
 
   ngOnInit() {
@@ -42,15 +37,15 @@ export class CreateDrinksCategoryComponent implements OnInit {
     this.spinner.show();
     if(this.category_data.categoryName != ""|| this.category_data.price != "")
     {
-      this.category_data.categoryId = this.makeid();
+      this.category_data.categoryId = this.auth.makeid();
       this.api.addCategory(this.category_data).then(added => {
         form.resetForm();
           this.loadingText = "";
           this.errorMessage = "";
-          this.loadingText = "Kategorie wurde erfolgreich hinzugefügt!";
+          this.loadingText = "Category Added Successfully";
         setTimeout(() => {
           this.spinner.hide();
-          this.router.navigate(['/bar/karten/getraenke']);
+          this.router.navigate(['/bar/karten/lunch']);
         }, 1000);
        
 
@@ -59,19 +54,10 @@ export class CreateDrinksCategoryComponent implements OnInit {
     else
     {
       this.spinner.hide();
-      this.errorMessage = "Bitte füll alle notwendigen Felder aus!";
+      this.errorMessage = "Please add all the information";
 
     }
 
-  }
-  makeid() {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for (var i = 0; i < 20; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
   }
 
 }
