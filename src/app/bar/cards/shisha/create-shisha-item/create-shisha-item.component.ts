@@ -99,6 +99,10 @@ i=0;
       this.loadingText = 'Add Price';
       return false;
     }
+    if(this.menu_item.description === ''){
+      this.loadingText = 'Add Description';
+      return false;
+    }
     
     if(this.menu_item.make == "no") {
       this.spinner.show();

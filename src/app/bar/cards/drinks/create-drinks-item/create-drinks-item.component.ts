@@ -49,9 +49,7 @@ export class CreateDrinksItemComponent implements OnInit {
     private afs: AngularFirestore,private afStorage: AngularFireStorage,private ng2ImgMax: Ng2ImgMaxService) {
     this.menu_item.userId = JSON.parse(localStorage.getItem("data")).uid;
     this.accountType = JSON.parse(localStorage.getItem('data')).accountType;
-    $(document).ready(function () {
-      $('#menuitemprice').mask('#.##0.00', {reverse: true});
-    });
+
    }
 
    ngOnInit() {
@@ -85,12 +83,7 @@ export class CreateDrinksItemComponent implements OnInit {
    allitems = [];
    i=0;
    onSubmit(form : NgForm) {
-    var regex = /^[0-9.\b]+$/;
-    if (!regex.test(this.menu_item.price)) {
-      this.loadingText=""
-      this.loadingText="Price must be a number or comma";
-      return false;
-    }
+ 
     if(this.menu_item.make == "no") {
     this.api.addMenuItem(this.menu_item).then(added => {
       

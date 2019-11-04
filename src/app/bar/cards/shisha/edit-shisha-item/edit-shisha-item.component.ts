@@ -64,6 +64,7 @@ export class EditShishaItemComponent implements OnInit {
         });
       })).subscribe(data=>{
         this.spinner.hide();
+   
          this.menu_item.itemName = data[0].itemName;
        
          this.menu_item.price = data[0].price;
