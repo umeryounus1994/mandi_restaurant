@@ -6,8 +6,8 @@
       <div class="title">
         <p class="subtitle">{{ 'LOCATION.ORDERS.title' | translate }}</p>
         <h1>{{orderedBy}} - <span class="menuitemprice">
-          {{total}}
-        </span>€</h1>
+          ${{total}}
+        </span></h1>
         <p class="success">{{ successMessage }}</p>
         <p class="danger">{{ errorMessage }}</p>
       </div>
@@ -25,7 +25,7 @@
   <div class="content">
     <div class="order" *ngFor="let t of orderData; let i = index">
       <div class="title">
-        <h3>{{ 'LOCATION.ORDERS.ORDER.title' | translate }} {{t.oTime}} Uhr</h3>
+        <h3>{{ 'LOCATION.ORDERS.ORDER.title' | translate }} {{t.oTime}}</h3>
         <div class="user-notes">
           <p class="danger"><b>{{orderDetails[i].comments}}</b></p>
         </div>  
@@ -52,7 +52,7 @@
         <!-- If there a menu items from drinksCard, show the following -->
         <div class="drinks" *ngIf='t.orderDeatils[1].length > 0'>
           <div class="title">
-            <h3>{{ 'LOCATION.CARDS.drinks' | translate }}</h3>
+            <h3>Lunch/Dinner/Others</h3>
           </div>
           <div class="grid-1">
             <div class="small-card" *ngFor="let o of t.orderDeatils[1]">

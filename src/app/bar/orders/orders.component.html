@@ -41,7 +41,7 @@
         <div class="orders">
           <div class="grid-1">
             <div class="small-card danger-bg" *ngFor="let p of pending" (click)="orderDetail(p.userOrderId,p.userName)">
-              <p> {{p.userName}} - {{p.orderTime}}Uhr</p>
+              <p>By: {{p.userName}} - {{p.orderTime}}</p>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@
         <div class="orders">
           <div class="grid-1">
             <div class="small-card" *ngFor="let c of completed" (click)="orderDetail(c.userOrderId,c.userName)">
-              <p> {{c.userName}}</p>
+              <p> By: {{c.userName}}</p>
             </div>
           </div>
         </div>

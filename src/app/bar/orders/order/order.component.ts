@@ -49,9 +49,6 @@ export class OrderComponent implements OnInit {
     this.orderId = JSON.parse(localStorage.getItem("order")).orderId;
     this.orderedByUser = JSON.parse(localStorage.getItem("order")).orderedBy;
     this.userId = JSON.parse(localStorage.getItem("data")).uid;
-    $(document).ready(function () {
-      $('.menuitemprice').mask('#.##0,00', {reverse: true});
-    });
   }
 
   ngOnInit() {
@@ -80,9 +77,9 @@ export class OrderComponent implements OnInit {
 
           if (this.orderTotal.toString().indexOf(".") != -1) {
             this.orderTotal = parseFloat(this.orderTotal).toFixed(2);
-            this.total = this.orderTotal.toString().replace(".", ",");
+            this.total = this.orderTotal.toString();
           } else {
-            this.total = this.orderTotal + ",00";
+            this.total = this.orderTotal;
           }
           //this.total =  this.orderTotal.toString().replace(".",",");
           if (this.orderStatus == "paid") {
@@ -181,7 +178,7 @@ export class OrderComponent implements OnInit {
         if (element.page == "breakfast") {
           this.shishaItems.push(element);
         }
-        if (element.page == "Getrankekarte") {
+        if (element.page == "lunch") {
           this.drinksItem.push(element);
         }
         if (element.page == "Speisekarte") {
