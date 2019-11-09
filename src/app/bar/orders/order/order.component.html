@@ -34,49 +34,15 @@
 
         <!-- If there a menu items from shishaCard, show the following -->
         <div class="shisha" *ngIf='t.orderDeatils[0].length > 0'>
-          <div class="title">
+          <!-- <div class="title">
             <h3>Breakfast</h3>
-          </div>
+          </div> -->
           <div class="grid-1">
             <div class="small-card" *ngFor="let o of t.orderDeatils[0]">
               <div class="subtitles">
-                  <p (click)="deleteItem(o.orderDetailId,o)" class="danger">{{ 'SUBMIT.cancel' | translate }}</p>
-                  <p *ngIf="o.status=='pending'" class="progress" (click)="changestatus('completed',o.orderDetailId,o)">{{ 'SUBMIT.complete' | translate }}</p>
-                  <p *ngIf="o.status=='completed'" class="success" (click)="changestatus('paid',o.orderDetailId,o)">{{ 'SUBMIT.pay' | translate }}</p>
-              </div>
-              <p>{{o.item}}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- If there a menu items from drinksCard, show the following -->
-        <div class="drinks" *ngIf='t.orderDeatils[1].length > 0'>
-          <div class="title">
-            <h3>Lunch/Dinner/Others</h3>
-          </div>
-          <div class="grid-1">
-            <div class="small-card" *ngFor="let o of t.orderDeatils[1]">
-              <div class="subtitles">
-                  <p (click)="deleteItem(o.orderDetailId,o)" class="danger">{{ 'SUBMIT.cancel' | translate }}</p>
-                  <p *ngIf="o.status=='pending'" class="progress" (click)="changestatus('completed',o.orderDetailId,o)">{{ 'SUBMIT.complete' | translate }}</p>
-                  <p *ngIf="o.status=='completed'" class="success" (click)="changestatus('paid',o.orderDetailId,o)">{{ 'SUBMIT.pay' | translate }}</p>
-              </div>
-              <p>{{o.item}}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- If there a menu items from foodsCard, show the following -->
-        <div class="foods" *ngIf='t.orderDeatils[2].length > 0'>
-          <div class="title">
-            <h3>{{ 'LOCATION.CARDS.snacks' | translate }}</h3>
-          </div>
-          <div class="grid-1">
-            <div class="small-card" *ngFor="let o of t.orderDeatils[2]">
-              <div class="subtitles">
-                  <p (click)="deleteItem(o.orderDetailId)" class="danger">{{ 'SUBMIT.cancel' | translate }}</p>
-                  <p *ngIf="o.status=='pending'" class="progress" (click)="changestatus('completed',o.orderDetailId)">{{ 'SUBMIT.complete' | translate }}</p>
-                  <p *ngIf="o.status=='completed'" class="success" (click)="changestatus('paid',o.orderDetailId)">{{ 'SUBMIT.pay' | translate }}</p>
+                  <!-- <p (click)="deleteItem(o.orderDetailId,o)" class="danger">{{ 'SUBMIT.cancel' | translate }}</p> -->
+                  <!-- <p *ngIf="o.status=='pending'" class="progress" (click)="changestatus('completed',o.orderDetailId,o)">{{ 'SUBMIT.complete' | translate }}</p>
+                  <p *ngIf="o.status=='completed'" class="success" (click)="changestatus('paid',o.orderDetailId,o)">{{ 'SUBMIT.pay' | translate }}</p> -->
               </div>
               <p>{{o.item}}</p>
             </div>

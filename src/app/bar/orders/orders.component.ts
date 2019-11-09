@@ -15,7 +15,6 @@ export class OrdersComponent implements OnInit {
   userId;
   barName = "";
   barId;
-  tables;
   pending = []
   completed = []
   paid = []
@@ -28,7 +27,29 @@ export class OrdersComponent implements OnInit {
   allTables=[]
   a=1;
   tableNames=[]
-  accountType=""
+  accountType="";
+  tables = [
+    {
+      tableNo: 1,
+      tableName: 'Table 1',
+    },
+    {
+      tableNo: 2,
+      tableName: 'Table 2',
+    },
+    {
+      tableNo: 3,
+      tableName: 'Table 3',
+    },
+    {
+      tableNo: 4,
+      tableName: 'Table 4',
+    },
+    {
+      tableNo: 5,
+      tableName: 'Table 5',
+    },
+  ];
   constructor(private auth : AuthService,private api : ApiService,private spinner : NgxSpinnerService, private router : Router,private afs : AngularFirestore) {
     this.userId = JSON.parse(localStorage.getItem('data')).uid;
 
@@ -108,7 +129,7 @@ export class OrdersComponent implements OnInit {
     this.completed = []
     this.paid = []
     this.spinner.show()
-    this.api.searchTableOrders(this.barId,tableId,"pending").pipe(map((actions: any) => {
+    this.afs.collection('userOrders', ref=>ref.where('tableNo','==',tableId).where("status","==",'pending')).snapshotChanges().pipe(map((actions: any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;
@@ -117,32 +138,11 @@ export class OrdersComponent implements OnInit {
     })).subscribe(data => {
       if(data.length > 0) {
         this.pending = data;
-        this.pending.forEach((element)=> {
-          var tableNo=element.tableNo;
-          
-          this.api.getTables(this.barId)
-          .pipe(map((actions: any) => {
-            return actions.map(a => {
-              const data = a.payload.doc.data()
-              const id = a.payload.doc.id;
-              return { id, ...data };
-            });
-          })).subscribe(data => {
-            this.tableNames=[]
-           
-           data.forEach(element1 => {
-             if(element1.tableNo == tableNo){
-               element.tableName = element1.tableName
-             }
-           });
-          })
-
-        })
       } else {
         this.noPending = true;
       }
     })
-    this.api.searchTableOrders(this.barId,tableId,"completed").pipe(map((actions: any) => {
+    this.afs.collection('userOrders', ref=>ref.where('tableNo','==',tableId).where("status","==",'completed')).snapshotChanges().pipe(map((actions: any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;
@@ -151,32 +151,11 @@ export class OrdersComponent implements OnInit {
     })).subscribe(data => {
       if(data.length > 0) {
         this.completed = data;
-        this.completed.forEach((element)=> {
-          var tableNo=element.tableNo;
-          
-          this.api.getTables(this.barId)
-          .pipe(map((actions: any) => {
-            return actions.map(a => {
-              const data = a.payload.doc.data()
-              const id = a.payload.doc.id;
-              return { id, ...data };
-            });
-          })).subscribe(data => {
-            this.tableNames=[]
-           
-           data.forEach(element1 => {
-             if(element1.tableNo == tableNo){
-               element.tableName = element1.tableName
-             }
-           });
-          })
-
-        })
       }else {
         this.noCompleted = true;
       }
     })
-    this.api.searchTableOrders(this.barId,tableId,"paid").pipe(map((actions: any) => {
+    this.afs.collection('userOrders', ref=>ref.where('tableNo','==',tableId).where("status","==",'paid')).snapshotChanges().pipe(map((actions: any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;

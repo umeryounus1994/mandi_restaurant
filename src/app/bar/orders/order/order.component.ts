@@ -130,28 +130,6 @@ export class OrderComponent implements OnInit {
     // orderDetails.unsubscribe()
   }
   changestatus(status, Id,order) {
-    
-   if(order.status == "completed" && order.page == "Shishakarte"){
-    this.afs.collection('menuitems', ref=>ref.where('itemId','==',order.itemId)).snapshotChanges().pipe(take(1),map((actions: any) => {
-      return actions.map(a => {
-        const data = a.payload.doc.data()
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      });
-    })).subscribe(data => {
-      if(data[0].itemAmount >= 0){
-        var amount = data[0].itemAmount;
-        var amtoAdd=1
-  
-          var rem = parseInt(amtoAdd.toString())+ parseInt(amount);
-        
-        var dat = {
-          itemAmount : rem
-        }
-        this.afs.doc("menuitems/"+order.itemId).update(dat);
-      }
-    })
-   }
    let d = {
           status: status
         };
@@ -167,7 +145,6 @@ export class OrderComponent implements OnInit {
 
   noItems=[]
   syncAllData(ordTime, ordData) {
-   
     if (ordData.length > 0) {
       this.noItems=[]
       this.shishaItems = [];
@@ -175,15 +152,13 @@ export class OrderComponent implements OnInit {
       this.foodsItem = [];
       this.allItems = [];
       ordData.forEach(element => {
-        if (element.page == "breakfast") {
-          this.shishaItems.push(element);
-        }
-        if (element.page == "lunch") {
-          this.drinksItem.push(element);
-        }
-        if (element.page == "Speisekarte") {
-          this.foodsItem.push(element);
-        }
+        this.shishaItems.push(element);
+        // if (element.page == "lunch") {
+        //   this.drinksItem.push(element);
+        // }
+        // if (element.page == "Speisekarte") {
+        //   this.foodsItem.push(element);
+        // }
         if (element.page == "") {
           this.noItems.push(element);
         }
@@ -191,11 +166,11 @@ export class OrderComponent implements OnInit {
      
 
       this.allItems.push(this.shishaItems);
-      this.allItems.push(this.drinksItem);
-      this.allItems.push(this.foodsItem);
+      // this.allItems.push(this.drinksItem);
+      // this.allItems.push(this.foodsItem);
       this.allItems.push(this.noItems)
 
-      this.result = this.groupBy("item", this.shishaItems)
+      //this.result = this.groupBy("item", this.shishaItems)
      
 
       var data = {
@@ -243,70 +218,6 @@ export class OrderComponent implements OnInit {
 
     return groupedElements;
 }
-  deleteItem(orderId,order) {
-    
-    
-    this.afs.collection('menuitems', ref=>ref.where('itemId','==',order.itemId)).snapshotChanges().pipe(take(1),map((actions: any) => {
-      return actions.map(a => {
-        const data = a.payload.doc.data()
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      });
-    })).subscribe(data => {
-     if(data[0].page=="Shishakarte"){
-      this.afs.collection('categories', ref=>ref.where('categoryId','==',data[0].categoryId)).snapshotChanges().pipe(take(1),map((actions: any) => {
-        return actions.map(a => {
-          const data = a.payload.doc.data()
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        });
-      })).subscribe(data1 => {
-       var price = data1[0].price.toString().replace(",",".");
-       var finalPrice = parseInt(this.total) - parseInt(price);
-        const dataaa = {
-          total : finalPrice
-        }
-        this.api.updateOrderStatus(this.orderId,dataaa);
-      })
-     } else {
-      
-      this.afs.collection('menuitems', ref=>ref.where('itemId','==',order.itemId)).snapshotChanges().pipe(take(1),map((actions: any) => {
-        return actions.map(a => {
-          const data = a.payload.doc.data()
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        });
-      })).subscribe(data2 => {
-        var price = data2[0].price.toString().replace(",",".");
-       var finalPrice = parseInt(this.total) - parseInt(price);
-        const dataaa = {
-          total : finalPrice
-        }
-        this.api.updateOrderStatus(this.orderId,dataaa);
-
-
-      })
-     }
-      if(data[0].itemAmount >= 0){
-        var amount = data[0].itemAmount;
-  
-          var rem = parseInt(amount) + 1;
-        
-        var dat = {
-          itemAmount : rem
-        }
-        this.afs.doc("menuitems/"+order.itemId).update(dat);
-      }
-    })
-    this.spinner.show();
-    this.afs
-      .doc("orderDetails/" + orderId)
-      .delete()
-      .then(done => {
-        this.spinner.hide();
-        location.reload();
-      });
-  }
   makeid() {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -364,8 +275,8 @@ getNowDateTimeStr(){
     this.api.updateOrderStatus(this.orderId, data).then(updated => { });
     let notData = {
       notificationId : this.makeid(),
-      title : "Bestellung fertig",
-      body : "Wir wünschen dir einen angenehmen Aufenthalt in unserer Bar und bedanken uns für deine Bestellung.",
+      title : "Order",
+      body : "Order has been marked as completed",
       userId : this.orderedByUserId,
       notDate : notdate, 
     }
@@ -417,7 +328,7 @@ getNowDateTimeStr(){
   markAsPaid() {
     if (this.orderStatus == "pending") {
       this.errorMessage = "";
-      this.errorMessage = "Die Bestellung wurde bezahlt.";
+      this.errorMessage = "You can not mark it paid if in pending";
     } else {
       let data = {
         status: "paid"
@@ -431,8 +342,8 @@ getNowDateTimeStr(){
       this.api.updateOrderStatus(this.orderId, data).then(updated => { });
       let notData = {
         notificationId : this.makeid(),
-        title : "Bestellung erfolgreich bezahlt",
-        body : "Wir bedanken uns für deinen Besuch und freuen uns, dich bald wieder begrüßen zu dürfen.",
+        title : "Order",
+        body : "Order has been marked as paid",
         userId : this.orderedByUserId,
         notDate : notdate, 
       }
@@ -481,27 +392,27 @@ getNowDateTimeStr(){
           });
         });
 
-        this.allValues.forEach(da => {
-          var orderedam = this.result[da.name].length;
-         this.afs.collection('menuitems', ref=>ref.where('itemId','==',da.items[0].itemId)).snapshotChanges().pipe(take(1),map((actions: any) => {
-            return actions.map(a => {
-              const data = a.payload.doc.data()
-              const id = a.payload.doc.id;
-              return { id, ...data };
-            });
-          })).subscribe(data => {
-            if(data[0].itemAmount >= 0){
-              var amount = data[0].itemAmount;
+      //   this.allValues.forEach(da => {
+      //     var orderedam = this.result[da.name].length;
+      //    this.afs.collection('menuitems', ref=>ref.where('itemId','==',da.items[0].itemId)).snapshotChanges().pipe(take(1),map((actions: any) => {
+      //       return actions.map(a => {
+      //         const data = a.payload.doc.data()
+      //         const id = a.payload.doc.id;
+      //         return { id, ...data };
+      //       });
+      //     })).subscribe(data => {
+      //       if(data[0].itemAmount >= 0){
+      //         var amount = data[0].itemAmount;
         
-                var rem = parseInt(orderedam)+ parseInt(amount);
+      //           var rem = parseInt(orderedam)+ parseInt(amount);
               
-              var dat = {
-                itemAmount : rem
-              }
-              this.afs.doc("menuitems/"+da.items[0].itemId).update(dat);
-            }
-          })
-      })
+      //         var dat = {
+      //           itemAmount : rem
+      //         }
+      //         this.afs.doc("menuitems/"+da.items[0].itemId).update(dat);
+      //       }
+      //     })
+      // })
 
       
     }

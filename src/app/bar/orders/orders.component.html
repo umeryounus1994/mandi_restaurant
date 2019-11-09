@@ -21,7 +21,7 @@
               <!-- Shows all orders -->
               <option value="all" selected>{{ 'LOCATION.ORDERS.all' | translate }}</option>
               <!-- Each table number should be shown in a seperate option -->
-              <option value="{{t.tableNo}}" *ngFor="let t of tables">{{ 'LOCATION.ORDERS.table' | translate }} {{t.tableNo}}: {{t.tableName}}</option>
+              <option value="{{t.tableNo}}" *ngFor="let t of tables">{{t.tableName}}</option>
             </select>
         </div>
       </label>
@@ -41,7 +41,7 @@
         <div class="orders">
           <div class="grid-1">
             <div class="small-card danger-bg" *ngFor="let p of pending" (click)="orderDetail(p.userOrderId,p.userName)">
-              <p>By: {{p.userName}} - {{p.orderTime}}</p>
+              <p>By: {{p.userName}} - Table ({{p.tableNo}}) - {{p.orderTime}}</p>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@
         <div class="orders">
           <div class="grid-1">
             <div class="small-card" *ngFor="let c of completed" (click)="orderDetail(c.userOrderId,c.userName)">
-              <p> By: {{c.userName}}</p>
+              <p> By: {{c.userName}} - Table ({{c.tableNo}})</p>
             </div>
           </div>
         </div>
