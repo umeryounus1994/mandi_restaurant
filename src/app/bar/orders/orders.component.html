@@ -9,7 +9,7 @@
       </div>
       <div class="buttons">
         <button (click)="navigateDownloads()" class="button button-primary-tint">{{ 'LOCATION.ORDERS.receipts' | translate }}</button>
-        <button (click)="navigateNewOrder()" class="button button-primary">{{ 'LOCATION.ORDERS.addOrder' | translate }}</button>
+        <!-- <button (click)="navigateNewOrder()" class="button button-primary">{{ 'LOCATION.ORDERS.addOrder' | translate }}</button> -->
       </div>
     </div>
     <div class="grid-3">
@@ -56,6 +56,37 @@
           <div class="grid-1">
             <div class="small-card" *ngFor="let c of completed" (click)="orderDetail(c.userOrderId,c.userName)">
               <p> By: {{c.userName}} - Table ({{c.tableNo}})</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="grid-2">
+      <div class="paid-orders">
+        <div class="title">
+          <h3>Paid Orders</h3>
+          <p *ngIf="paid.length < 1">No Paid Orders</p>
+        </div>
+        
+        <div class="orders">
+          <div class="grid-1">
+            <div class="small-card paid-bg" *ngFor="let p of paid" (click)="orderDetail(p.userOrderId,p.userName)">
+              <p>By: {{p.userName}} - Table ({{p.tableNo}}) - {{p.orderTime}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="paid-orders">
+        <div class="title">
+          <h3>Takeway Orders</h3>
+          <p *ngIf="takewayorders.length < 1">No Takeway Orders</p>
+        </div>
+        
+        <div class="orders">
+          <div class="grid-1">
+            <div class="small-card takeway-bg" *ngFor="let p of takewayorders" (click)="orderDetail(p.userOrderId,p.userName)">
+              <p>By: {{p.userName}} - Table ({{p.tableNo}}) - {{p.orderTime}}</p>
             </div>
           </div>
         </div>

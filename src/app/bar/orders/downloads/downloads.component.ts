@@ -35,8 +35,6 @@ export class DownloadsComponent implements OnInit {
 
   constructor(private xls : ExportService, private api : ApiService, private router : Router, private afs : AngularFirestore,
     private db : AngularFireDatabase) {
-    this.barId = JSON.parse(localStorage.getItem('bar')).barId;
-    this.barName = JSON.parse(localStorage.getItem("bar")).barName;
     
     var today = new Date();
     this.currentDate = today.getDate();
@@ -57,9 +55,9 @@ export class DownloadsComponent implements OnInit {
    i=1;
    j=1;
   ngOnInit() {
-    this.barName = JSON.parse(localStorage.getItem("bar")).barName;
+    
 
-    this.api.getMonthDownloads(this.dateToCompare,this.barId).pipe(map((actions: any) => {
+    this.afs.collection('userOrders', ref=>ref.where("dateExport","==",this.dateToCompare)).snapshotChanges().pipe(map((actions: any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;
@@ -74,7 +72,7 @@ export class DownloadsComponent implements OnInit {
             orderDate: item.orderDate,
             orderTime : item.orderTime,
             tableNumber : item.tableNo,
-            total : item.total + " €"
+            total : '$'+item.total
           }
           this.dataArray.push(d);
           this.i++;
@@ -82,7 +80,7 @@ export class DownloadsComponent implements OnInit {
       }
     })
   
-    this.api.getMonthDownloads(this.lastMonthCompare,this.barId).pipe(map((actions: any) => {
+    this.afs.collection('userOrders', ref=>ref.where("dateExport","==",this.lastMonthCompare)).snapshotChanges().pipe(map((actions: any) => {
       return actions.map(a => {
         const data = a.payload.doc.data()
         const id = a.payload.doc.id;
@@ -97,7 +95,7 @@ export class DownloadsComponent implements OnInit {
             orderDate: item1.orderDate,
             orderTime : item1.orderTime,
             tableNumber : item1.tableNo,
-            total : item1.total + " €",
+            total : '$'+item1.total,
             orderId : item1.orderId
           }
           this.lastMonthData.push(d1);
@@ -105,44 +103,11 @@ export class DownloadsComponent implements OnInit {
         })
       }
     })
-  
-    if(this.currentDate > 14) {
-      this.api.getMonthDownloads(this.lastMonthCompare,this.barId).pipe(map((actions: any) => {
-        return actions.map(a => {
-          const data = a.payload.doc.data()
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        });
-      })).subscribe(data => {
-        this.oldRecordData = data
-        if(data.length > 0) {
-         
-          this.api.getOrdersDetails(data[0].userOrderId).pipe(map((actions: any) => {
-            return actions.map(a => {
-              const data = a.payload.doc.data()
-              const id = a.payload.doc.id;
-              return { id, ...data };
-            });
-          })).subscribe(data => {
-            data.forEach(d => {
-              this.api.deleteOldOrders(d.orderId).then(deleted => {
-            
-              })
-            })
-          });
-         
-        }
-        this.oldRecordData.forEach(old => {
-          this.api.deleteOldUserOrders(old.userOrderId).then(deleted => {
-         
-          })
-        })
-      })
-    }
+
   
   }
   month_name(dt){
-    var mlist = [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ];
+    var mlist = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
       return mlist[dt];
     };
 
@@ -208,7 +173,7 @@ export class DownloadsComponent implements OnInit {
       },2000 );
       } else {
         this.errorText = ""
-        this.errorText = "Für diesen Monat gibt es noch keine aufgenommen Bestellungen."
+        this.errorText = "No data to export"
       }
     }
     exportLast() {
@@ -235,7 +200,7 @@ export class DownloadsComponent implements OnInit {
       },2000 );
       } else {
         this.errorText = ""
-        this.errorText = "Für diesen Monat gibt es noch keine aufgenommen Bestellungen."
+        this.errorText = "No data to export"
       }
     }
 

@@ -8,6 +8,8 @@
         <h1>{{orderedBy}} - <span class="menuitemprice">
           ${{total}}
         </span></h1>
+        <p *ngIf="orderedByAddress != ''">Address: {{orderedByAddress}}</p>
+        <p *ngIf="orderedByPhone != ''">Phone: {{orderedByPhone}}</p>
         <p class="success">{{ successMessage }}</p>
         <p class="danger">{{ errorMessage }}</p>
       </div>
@@ -39,11 +41,13 @@
           </div> -->
           <div class="grid-1">
             <div class="small-card" *ngFor="let o of t.orderDeatils[0]">
+                <img class="itemImg" src="{{o.image}}">
               <div class="subtitles">
                   <!-- <p (click)="deleteItem(o.orderDetailId,o)" class="danger">{{ 'SUBMIT.cancel' | translate }}</p> -->
                   <!-- <p *ngIf="o.status=='pending'" class="progress" (click)="changestatus('completed',o.orderDetailId,o)">{{ 'SUBMIT.complete' | translate }}</p>
                   <p *ngIf="o.status=='completed'" class="success" (click)="changestatus('paid',o.orderDetailId,o)">{{ 'SUBMIT.pay' | translate }}</p> -->
               </div>
+             
               <p>{{o.item}}</p>
             </div>
           </div>
