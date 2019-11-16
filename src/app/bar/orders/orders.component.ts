@@ -28,6 +28,7 @@ export class OrdersComponent implements OnInit {
   a=1;
   tableNames=[]
   accountType="";
+  takewayorders = [];
   tables = [
     {
       tableNo: 1,
@@ -75,7 +76,14 @@ export class OrdersComponent implements OnInit {
       });
     })).subscribe(data => {
       if(data.length > 0) {
-        this.pending = data;
+        data.forEach(element => {
+          if(element.orderType === 'normal'){
+            this.pending.push(element);
+          } else {
+            this.takewayorders.push(element);
+          }
+        });
+        
       
        
         this.allpending = data;
@@ -137,7 +145,13 @@ export class OrdersComponent implements OnInit {
       });
     })).subscribe(data => {
       if(data.length > 0) {
-        this.pending = data;
+        data.forEach(element => {
+          if(element.orderType === 'normal'){
+            this.pending.push(element);
+          } else {
+            this.takewayorders.push(element);
+          }
+        });
       } else {
         this.noPending = true;
       }
