@@ -38,6 +38,8 @@ export class OrderComponent implements OnInit {
   result:any
   tableName=""
   orderedByUserId;
+  orderedByAddress='';
+  orderedByPhone='';
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
@@ -74,14 +76,28 @@ export class OrderComponent implements OnInit {
           this.orderDate = data[0].orderDate;
           this.orderTime = data[0].orderTime;
           this.orderTotal = data[0].total;
-
+          if(data[0].orderType === 'takeaway'){
+          this.api.getUser1(this.orderedByUserId)
+          .pipe(
+            map((actions: any) => {
+              return actions.map(a => {
+                const data = a.payload.doc.data();
+                const id = a.payload.doc.id;
+                return { id, ...data };
+              });
+            })
+          )
+          .subscribe(userInfo => {
+            this.orderedByAddress = userInfo[0].address ? userInfo[0].address : '';
+            this.orderedByPhone = userInfo[0].phone ? userInfo[0].phone : '';
+          });
+        }
           if (this.orderTotal.toString().indexOf(".") != -1) {
             this.orderTotal = parseFloat(this.orderTotal).toFixed(2);
             this.total = this.orderTotal.toString();
           } else {
             this.total = this.orderTotal;
           }
-          //this.total =  this.orderTotal.toString().replace(".",",");
           if (this.orderStatus == "paid") {
             this.successMessage = "";
             this.successMessage =
@@ -127,7 +143,6 @@ export class OrderComponent implements OnInit {
 
         }
       });
-    // orderDetails.unsubscribe()
   }
   changestatus(status, Id,order) {
    let d = {
@@ -153,30 +168,19 @@ export class OrderComponent implements OnInit {
       this.allItems = [];
       ordData.forEach(element => {
         this.shishaItems.push(element);
-        // if (element.page == "lunch") {
-        //   this.drinksItem.push(element);
-        // }
-        // if (element.page == "Speisekarte") {
-        //   this.foodsItem.push(element);
-        // }
+
         if (element.page == "") {
           this.noItems.push(element);
         }
       });
      
-
       this.allItems.push(this.shishaItems);
-      // this.allItems.push(this.drinksItem);
-      // this.allItems.push(this.foodsItem);
       this.allItems.push(this.noItems)
-
-      //this.result = this.groupBy("item", this.shishaItems)
-     
 
       var data = {
         orderDeatils: this.allItems
       };
-
+      console.log(data);
       this.orderData[this.i] = data;
       this.orderData[this.i].oTime = ordTime;
       if(this.i > 0){
@@ -390,31 +394,7 @@ getNowDateTimeStr(){
                 });
               });
           });
-        });
-
-      //   this.allValues.forEach(da => {
-      //     var orderedam = this.result[da.name].length;
-      //    this.afs.collection('menuitems', ref=>ref.where('itemId','==',da.items[0].itemId)).snapshotChanges().pipe(take(1),map((actions: any) => {
-      //       return actions.map(a => {
-      //         const data = a.payload.doc.data()
-      //         const id = a.payload.doc.id;
-      //         return { id, ...data };
-      //       });
-      //     })).subscribe(data => {
-      //       if(data[0].itemAmount >= 0){
-      //         var amount = data[0].itemAmount;
-        
-      //           var rem = parseInt(orderedam)+ parseInt(amount);
-              
-      //         var dat = {
-      //           itemAmount : rem
-      //         }
-      //         this.afs.doc("menuitems/"+da.items[0].itemId).update(dat);
-      //       }
-      //     })
-      // })
-
-      
+        });      
     }
     this.router.navigate(["/bar"]);
   }
